@@ -242,3 +242,11 @@ let CoreEventType = {
 	CCTYPE_TITHI_END : 70,
 
 }
+
+let GCLayoutData = {
+	textSizeH1 : 36,
+	textSizeH2 : 32,
+	textSizeText : 24,
+	textSizeNote : 16
+}
+

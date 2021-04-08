@@ -3,14 +3,17 @@
 <head>
 </head>
 
+<script src="js/sprintf.js"></script>
 <script src="js/System.js"></script>
 <script src="js/Enums.js"></script>
 <script src="js/GCMath.js"></script>
+<script src="js/GCDayHours.js"></script>
+<script src="js/GCAyanamsha.js"></script>
+<script src="js/GCRasi.js"></script>
+
 <script src="js/GregorianDateTime.js"></script>
 <script src="js/GCPaksa.js"></script>
-<script src="js/GCRasi.js"></script>
 <script src="js/GaurabdaDate.js"></script>
-<script src="js/GCAyanamsha.js"></script>
 <script src="js/TCoreEvent.js"></script>
 <script src="js/GCEkadasi.js"></script>
 <script src="js/GCEarthData.js"></script>
@@ -38,6 +41,7 @@
 <script src="js/GCLocation.js"></script>
 
 
+
 <script>
 //ImportScript("js/Convert.js")
 //ImportScript("js/GregorianDateTime.js")
@@ -50,7 +54,10 @@
 
   Here:
   <script>
-  GregorianDateTime_Test()
+    var dt = new DAYTIME();
+    console.log('Ayanamsha: ', GCAyanamsha.GetAyanamsa(2455437.000000))
+    console.log('DAYTIME testing:', dt.ToLongTimeString())
+  //GregorianDateTime_Test()
   //document.write("aaaa")
   </script>
 

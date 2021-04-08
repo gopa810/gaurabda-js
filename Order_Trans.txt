@@ -1,8 +1,8 @@
-GCMath.h
-GCDayHours.h
-enums.h
-GCAyanamsha.h
-GCLayoutData
+-GCMath.h
+-GCDayHours.h
+-enums.h
+-GCAyanamsha.h
+-GCLayoutData
 GCRasi
 GCVedicTime
 GCDisplaySettings
