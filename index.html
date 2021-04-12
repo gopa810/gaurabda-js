@@ -10,7 +10,7 @@
 <script src="js/GCDayHours.js"></script>
 <script src="js/GCAyanamsha.js"></script>
 <script src="js/GCRasi.js"></script>
-
+<script src="js/TCountry.js"></script>
 <script src="js/GregorianDateTime.js"></script>
 <script src="js/GCPaksa.js"></script>
 <script src="js/GaurabdaDate.js"></script>
@@ -51,12 +51,18 @@
 </script>
 
 <body>
-
-  Here:
   <script>
     var dt = new DAYTIME();
-    console.log('Ayanamsha: ', GCAyanamsha.GetAyanamsa(2455437.000000))
-    console.log('DAYTIME testing:', dt.ToLongTimeString())
+    document.write('<h2>Ayanamsha</h2>')
+    document.write('Ayanamsha: ', GCAyanamsha.GetAyanamsa(2455437.000000))
+    document.write('<h2>Daytime</h2>')
+    document.write('DAYTIME testing:', dt.ToLongTimeString())
+    document.write('<h2>GCRasi</h2>')
+    document.write('<p>Rasi:', GCRasi.GetRasi(300, 25))
+    document.write('<p>Name:', GCRasi.GetName(5))
+    document.write('<p>Display settings:', gds.getText(40))
+    document.write('<p>GCStrings:', GCStrings.getString(0));
+    document.write('<p>TCountry:', TCountry.GetCountryName(TCountry.CodeToInt('IN')));
   //GregorianDateTime_Test()
   //document.write("aaaa")
   </script>

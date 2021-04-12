@@ -8,9 +8,9 @@ class GaurabdaDate {
 	}
 
 	Set(t,m,y) {
-		tithi = t;
-		masa = m;
-		gyear = y;
+		this.tithi = t;
+		this.masa = m;
+		this.gyear = y;
 	}
 
 	next() {

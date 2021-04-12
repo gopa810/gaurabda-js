@@ -495,28 +495,33 @@ class GCDisplaySettings {
 
 	getCount()
 	{
-		return GCDisplaySettings_gss.length
+		return this.GCDisplaySettings_gss.length
 	}
 
 	getValue(i)
 	{
-		return GCDisplaySettings_gss[i].val;
+		return this.GCDisplaySettings_gss[i].val;
 	}
 
 	getBoolValue(i)
 	{
-		return GCDisplaySettings_gss[i].val != 0;
+		return this.GCDisplaySettings_gss[i].val != 0;
 	}
 	setValue(i, val)
 	{
-		GCDisplaySettings_gss[i].old_val = GCDisplaySettings_gss[i].val;
-		GCDisplaySettings_gss[i].val = val;
+		this.GCDisplaySettings_gss[i].old_val = GCDisplaySettings_gss[i].val;
+		this.GCDisplaySettings_gss[i].val = val;
 	}
 
 	setBoolValue(i, val)
 	{
-		GCDisplaySettings_gss[i].old_val = GCDisplaySettings_gss[i].val;
-		GCDisplaySettings_gss[i].val = val ? 1 : 0;
+		this.GCDisplaySettings_gss[i].old_val = GCDisplaySettings_gss[i].val;
+		this.GCDisplaySettings_gss[i].val = val ? 1 : 0;
+	}
+
+	getText(i)
+	{
+		return this.GCDisplaySettings_gss[i].text;
 	}
 
 }

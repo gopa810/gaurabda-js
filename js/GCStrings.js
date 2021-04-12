@@ -680,8 +680,8 @@ class GCStrings {
 
 	static getString(i)
 	{
-		if (i < 0 || i >= gstr.Count)
-			return string.Empty;
+		if (i < 0 || i >= GCStrings_gstr.length)
+			return "";
 
 		return GCStrings_gstr[i];
 	}
