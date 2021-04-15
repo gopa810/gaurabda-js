@@ -8,21 +8,21 @@
 - GCDisplaySettings
 - GCStrings
 - TCountry
-GCGregorianTime
-GCCoords.h
-TTimeZone
-GCEarthData
-GCStringBuilder
-LocationRef
-GCMoonData
-GCSunData
-GCConjunction
+- GCGregorianTime
+- GCCoords.h
+- TTimeZone
+- GCEarthData
+- GCStringBuilder
+- LocationRef
+- GCMoonData
+- GCSunData
+- GCConjunction
 GCNaksatra
 GCSankranti
 GCDayData
 GCTithi
 GCYoga
-LocationList
+- LocationList
 CustomEventList
 GCGlobal
 GCCalendar

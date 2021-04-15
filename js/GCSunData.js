@@ -86,25 +86,27 @@ class GCSunData {
 
 		if (month < 3)
 		{
-			y = (year - 1) / 100;
+			y = Convert.ToInt32((year - 1) / 100);
 			yy = (year - 1) % 100;
 		}
 		else
 		{
-			y = year / 100;
+			y = Convert.ToInt32(year / 100);
 			yy = year % 100;
 		}
 
+		var y4 = Convert.ToInt32(y/4);
+		var yy4 = Convert.ToInt32(yy/4);
 		if (y <= 15)
 		{
-			mel += sun_1_col[y % 4] + sun_1_row[y / 4];
+			mel += sun_1_col[y % 4] + sun_1_row[y4];
 		}
 		else if (y < 40)
 		{
-			mel += sun_2_col[y % 4] + sun_2_row[y / 4];
+			mel += sun_2_col[y % 4] + sun_2_row[y4];
 		}
 
-		mel += sun_3_col[yy % 4] + sun_3_row[yy / 4];
+		mel += sun_3_col[yy % 4] + sun_3_row[yy4];
 
 		return mel;
 	}
@@ -125,17 +127,17 @@ class GCSunData {
 
 		if (month < 3)
 		{
-			y = (year - 1) / 100;
+			y = Convert.ToInt32((year - 1) / 100);
 			yy = (year - 1) % 100;
 		}
 		else
 		{
-			y = year / 100;
+			y = Convert.ToInt32(year / 100);
 			yy = year % 100;
 		}
 
-		per = sun_4_row[y / 4] + sun_4_col[y % 4];
-		per += sun_5_row[yy / 4] + sun_5_col[yy % 4];
+		per = sun_4_row[Convert.ToInt32(y / 4)] + sun_4_col[y % 4];
+		per += sun_5_row[Convert.ToInt32(yy / 4)] + sun_5_col[yy % 4];
 
 		return per;
 	}
@@ -160,8 +162,7 @@ class GCSunData {
 		var dLongitude = ed.longitudeDeg;
 
 		// mean ecliptic longitude of the sun 
-		meanLongitudeOfSun = GCSunData.SunGetMeanLong(vct.year, vct.month, vct.day) + (360 / 365.25) * dayHours / 360.0;
-
+		var meanLongitudeOfSun = GCSunData.SunGetMeanLong(vct.year, vct.month, vct.day) + (360 / 365.25) * dayHours / 360.0;
 		// ecliptic longitude of perigee 
 		var elp = GCSunData.SunGetPerigee(vct.year, vct.month, vct.day);
 
@@ -173,13 +174,13 @@ class GCSunData {
 		this.longitudeDeg = els = meanLongitudeOfSun + 1.915 * Math.sin(mas * DG) + 0.02 * Math.sin(2 * DG * mas);
 
 		// declination of the sun
-		this.declinationDeg = RAD * Math.Asin(0.39777 * Math.sin(els * DG));
+		this.declinationDeg = RAD * Math.asin(0.39777 * Math.sin(els * DG));
 
 		// right ascension of the sun
-		this.rightAscensionDeg = els - RAD * Math.Atan2(Math.sin(2 * els * DG), 23.2377 + Math.cos(2 * DG * els));
+		this.rightAscensionDeg = els - RAD * Math.atan2(Math.sin(2 * els * DG), 23.2377 + Math.cos(2 * DG * els));
 
 		// equation of time
-		equationOfTime = this.rightAscensionDeg - meanLongitudeOfSun;
+		this.equationOfTime = this.rightAscensionDeg - meanLongitudeOfSun;
 	}
 
 	// GregorianDateTime vct, GCEarthData earth
@@ -187,7 +188,7 @@ class GCSunData {
 		var tempSunrise = 180.0;
 		var sun = new GCSunData();
 
-		for (i = 0; i < 3; i++)
+		for (var i = 0; i < 3; i++)
 		{
 			sun.SunPosition(vct, earth, tempSunrise - 180.0);
 
@@ -227,6 +228,9 @@ class GCSunData {
 				break;
 			}
 		}
+
+		console.log('sun.longitude', sun.longitudeDeg);
+		console.log('tempSunrise', tempSunrise)
 
 		var result = new GCHourTime();
 		result.longitude = sun.longitudeDeg;

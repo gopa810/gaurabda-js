@@ -104,6 +104,15 @@ class TCountry {
     {
         return TCountry_gcountries[nIndex].code;
     }
+
+    static FindCountryByName(name) {
+        for(var c of TCountry_gcountries) {
+            if (c.name == name) {
+                return c;
+            }
+        }
+        return null;
+    }
 }
 
 var TCountry_gcountries = [

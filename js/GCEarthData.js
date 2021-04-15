@@ -144,25 +144,24 @@ class GCEarthData
 	}
 
 	get TimeZoneName() {
-		return p_timezonename; 
+		return this.TimeZone.Name;
 	}
 
 	set TimeZoneName(value) {
-		this.p_timezonename = value; 
-		this.p_timezone = null;
+		this.TimeZone = TTimeZone.FindTimeZoneByName(value)
 	}
 
 	get TimeZone()
 	{
 		if (this.p_timezone != null) 
-			return p_timezone;
+			return this.p_timezone;
 		this.p_timezone = TTimeZone.FindTimeZoneByName(this.p_timezonename);
 		return this.p_timezone;
 	}
 	set TimeZone(value)
 	{
-		p_timezone = value;
-		p_timezonename = (value == null ? "" : p_timezone.Name);
+		this.p_timezone = value;
+		this.p_timezonename = (value == null ? "" : this.p_timezone.Name);
 	}
 
 
@@ -186,7 +185,8 @@ class GCEarthData
 		var d, m, ms, f, s, l, ls;
 		var i;
 		var meanObliquity, nutationObliquity;
-		var nutationLongitude,obliguity
+		var nutationLongitude;
+		var obliguity;
 
 		t = (julianDateUTC - 2451545.0) / 36525;
 
@@ -225,13 +225,13 @@ class GCEarthData
 
 			for (i = 0; i < 31; i++)
 			{
-				s = GCEarthData_arg_mul[i, 0] * d
-				   + GCEarthData_arg_mul[i, 1] * m
-				   + GCEarthData_arg_mul[i, 2] * ms
-				   + GCEarthData_arg_mul[i, 3] * f
-				   + GCEarthData_arg_mul[i, 4] * omega;
-				nutationLongitude = nutationLongitude + (GCEarthData_arg_phi[i, 0] + GCEarthData_arg_phi[i, 1] * t * 0.1) * GCMath.sinDeg(s);
-				nutationObliquity = nutationObliquity + (GCEarthData_arg_eps[i, 0] + GCEarthData_arg_eps[i, 1] * t * 0.1) * GCMath.cosDeg(s);
+				s = GCEarthData_arg_mul[i][0] * d
+				   + GCEarthData_arg_mul[i][1] * m
+				   + GCEarthData_arg_mul[i][2] * ms
+				   + GCEarthData_arg_mul[i][3] * f
+				   + GCEarthData_arg_mul[i][4] * omega;
+				nutationLongitude = nutationLongitude + (GCEarthData_arg_phi[i][0] + GCEarthData_arg_phi[i][1] * t * 0.1) * GCMath.sinDeg(s);
+				nutationObliquity = nutationObliquity + (GCEarthData_arg_eps[i][0] + GCEarthData_arg_eps[i][1] * t * 0.1) * GCMath.cosDeg(s);
 			}
 
 			nutationLongitude = nutationLongitude * 0.0001 / 3600;
@@ -240,7 +240,7 @@ class GCEarthData
 		// angle of ecliptic
 		meanObliquity = 84381.448 + (-46.8150 + (-0.00059 + 0.001813 * t) * t) * t;
 
-		obliquity = (meanObliquity + nutationObliquity) / 3600;
+		obliguity = (meanObliquity + nutationObliquity) / 3600;
 
 		return [nutationLongitude,obliguity]
 	}
@@ -310,7 +310,7 @@ class GCEarthData
 	static GetTextLatitude( d)
 	{
 		var c0 = d < 0.0 ? 'S' : 'N';
-		d = Math.Abs(d);
+		d = Math.abs(d);
 		var a0 = GCMath.IntFloor(d);
 		var a1 = GCMath.IntFloor((d - a0) * 60 + 0.5);
 
@@ -323,7 +323,7 @@ class GCEarthData
 		var c0;
 
 		c0 = d < 0.0 ? 'W' : 'E';
-		d = Math.Abs(d);
+		d = Math.abs(d);
 		a0 = GCMath.IntFloor(d);
 		a1 = GCMath.IntFloor((d - a0) * 60 + 0.5);
 
@@ -447,9 +447,7 @@ class GCEarthData
 		return new_tit, nextDate;
 	}
 
-
-
-	ToString() {
+	toString() {
 		return "Latitude: " + GCEarthData.GetTextLatitude(this.latitudeDeg)
 			+ ", Longitude: " + GCEarthData.GetTextLongitude(this.longitudeDeg)
 			+ ", Timezone: " + TTimeZone.GetTimeZoneOffsetText(this.OffsetUtcHours)

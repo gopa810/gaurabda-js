@@ -12,7 +12,7 @@ function GregorianDateTime_Test() {
   
   n.AddHours(5.7892)
 
-  document.write("New value is: " + n.c_str())
+  document.write("<p>GregporianDateTime test: " + n.c_str())
 }
 
 
@@ -63,7 +63,7 @@ class GregorianDateTime {
 		InitWeekDay()
 	}
 	
-	ToString() {
+	toString() {
 		return this.Format("{day} {monthAbr} {year}")
 	}
 	
@@ -173,8 +173,8 @@ class GregorianDateTime {
 	}
 	
 	GetJulianInteger() {
-		yy = year - ((12 - month) / 10)
-		mm = month + 9
+		var yy = this.year - Convert.ToInt32((12 - this.month) / 10)
+		var mm = this.month + 9
 
 		if (mm >= 12)
 			mm -= 12;
@@ -184,16 +184,23 @@ class GregorianDateTime {
 
 		k1 = Convert.ToInt32 (Math.floor(365.25 * (yy + 4712)));
 		k2 = Convert.ToInt32 (Math.floor(30.6 * mm + 0.5));
-		k3 = Convert.ToInt32 (Math.floor(Math.floor((yy/100)+49)*.75))-38;
-		j = k1 + k2 + day + 59;
+		var yy100 = GCMath.IntFloor(yy/100);
+		k3 = Convert.ToInt32 (Math.floor(Math.floor((yy100)+49)*.75))-38;
+		j = k1 + k2 + this.day + 59;
 		if (j > 2299160)
 			j -= k3;
-
+		/*console.log('Date', this.year, this.month, this.day)
+		console.log('   yy', yy)
+		console.log('   mm', mm)
+		console.log('   k1', k1)
+		console.log('   k2', k2)
+		console.log('   k3', k3)
+		console.log('    j', j)*/
 		return j;
 	}
 
 	GetJulian() {
-		return 1.0*GetJulianInteger()
+		return 1.0*this.GetJulianInteger()
 	}
 	
 	NormalizeValues() {
@@ -321,17 +328,17 @@ class GregorianDateTime {
 
 	TimeWithOffset(p) {
 		var dt = this.Clone()
-		dt.shour += Convert.ToDouble(p);
+		dt.shour += parseFloat(p);
 		dt.NormalizeValues();
 		return dt
 	}
 	
 	GetJulianDetailed() {
-		return GetJulian() - 0.5 + this.shour
+		return this.GetJulian() - 0.5 + this.shour
 	}
 	
 	GetJulianComplete() {
-		return GetJulian() - 0.5 + this.shour - this.TimezoneHours/24.0
+		return this.GetJulian() - 0.5 + this.shour - this.TimezoneHours/24.0
 	}
 
 	InitWeekDay() {

@@ -11,13 +11,15 @@ class GCMoonData {
 		this.azimuth = 0.0
 	}
 
+	toString() {
+		return "Latitude: " + this.latitude_deg + ", Longitude: " + this.longitude_deg +
+		    ", distance: " + this.radius;
+	}
 
 	Calculate(jdate) {
 
-		var crd = CalculateEcliptical(jdate);
-		var eqc = new(GCEquatorialCoords)
-
-		eqc = GCEarthData.eclipticalToEquatorialCoords(crd, jdate);
+		var crd = GCMoonData.CalculateEcliptical(jdate);
+		var eqc = GCEarthData.eclipticalToEquatorialCoords(crd, jdate);
 
 		this.radius = crd.distance;
 		this.longitude_deg = crd.longitude;
@@ -32,7 +34,7 @@ class GCMoonData {
 	{
 		var md = new GCMoonData();
 		md.Calculate(jd);
-		return md.longitude_deg, md.latitude_deg, md.radius
+		return md;
 	}
 
 	//==================================================================================
@@ -323,12 +325,12 @@ class GCMoonData {
 		var i;
 		for (i = 0; i < 60; i++)
 		{
-			temp = GCMoonData_sigma_r[i] * GCMath.cosDeg(GCMoonData_arg_lr[i, 0] * d
-								   + GCMoonData_arg_lr[i, 1] * m
-								   + GCMoonData_arg_lr[i, 2] * ms
-								   + GCMoonData_arg_lr[i, 3] * f);
-			if (Math.abs(GCMoonData_arg_lr[i, 1]) == 1) temp = temp * e;
-			if (Math.abs(GCMoonData_arg_lr[i, 1]) == 2) temp = temp * e * e;
+			temp = GCMoonData_sigma_r[i] * GCMath.cosDeg(GCMoonData_arg_lr[i][0] * d
+								   + GCMoonData_arg_lr[i][1] * m
+								   + GCMoonData_arg_lr[i][2] * ms
+								   + GCMoonData_arg_lr[i][3] * f);
+			if (Math.abs(GCMoonData_arg_lr[i][1]) == 1) temp = temp * e;
+			if (Math.abs(GCMoonData_arg_lr[i][1]) == 2) temp = temp * e * e;
 			sr = sr + temp;
 		}
 
@@ -375,24 +377,24 @@ class GCMoonData {
 		sr = 0;
 		for (i = 0; i < 60; i++)
 		{
-			temp = GCMoonData_sigma_r[i] * GCMath.cosDeg(GCMoonData_arg_lr[i, 0] * d
-								   + GCMoonData_arg_lr[i, 1] * m
-								   + GCMoonData_arg_lr[i, 2] * ms
-								   + GCMoonData_arg_lr[i, 3] * f);
-			if (Math.Abs(GCMoonData_arg_lr[i, 1]) == 1) temp = temp * e;
-			if (Math.Abs(GCMoonData_arg_lr[i, 1]) == 2) temp = temp * e * e;
+			temp = GCMoonData_sigma_r[i] * GCMath.cosDeg(GCMoonData_arg_lr[i][0] * d
+								   + GCMoonData_arg_lr[i][1] * m
+								   + GCMoonData_arg_lr[i][2] * ms
+								   + GCMoonData_arg_lr[i][3] * f);
+			if (Math.abs(GCMoonData_arg_lr[i][1]) == 1) temp = temp * e;
+			if (Math.abs(GCMoonData_arg_lr[i][1]) == 2) temp = temp * e * e;
 			sr = sr + temp;
 		}
 
 		sl = 0;
 		for (i = 0; i < 60; i++)
 		{
-			temp = GCMoonData_sigma_l[i] * GCMath.sinDeg(GCMoonData_arg_lr[i, 0] * d
-								   + GCMoonData_arg_lr[i, 1] * m
-								   + GCMoonData_arg_lr[i, 2] * ms
-								   + GCMoonData_arg_lr[i, 3] * f);
-			if (Math.Abs(GCMoonData_arg_lr[i, 1]) == 1) temp = temp * e;
-			if (Math.Abs(GCMoonData_arg_lr[i, 1]) == 2) temp = temp * e * e;
+			temp = GCMoonData_sigma_l[i] * GCMath.sinDeg(GCMoonData_arg_lr[i][0] * d
+								   + GCMoonData_arg_lr[i][1] * m
+								   + GCMoonData_arg_lr[i][2] * ms
+								   + GCMoonData_arg_lr[i][3] * f);
+			if (Math.abs(GCMoonData_arg_lr[i][1]) == 1) temp = temp * e;
+			if (Math.abs(GCMoonData_arg_lr[i][1]) == 2) temp = temp * e * e;
 			sl = sl + temp;
 		}
 
@@ -403,12 +405,12 @@ class GCMoonData {
 		sb = 0;
 		for (i = 0; i < 60; i++)
 		{
-			temp = GCMoonData_sigma_b[i] * GCMath.sinDeg(GCMoonData_arg_b[i, 0] * d
-								   + GCMoonData_arg_b[i, 1] * m
-								   + GCMoonData_arg_b[i, 2] * ms
-								   + GCMoonData_arg_b[i, 3] * f);
-			if (Math.Abs(GCMoonData_arg_b[i, 1]) == 1) temp = temp * e;
-			if (Math.Abs(GCMoonData_arg_b[i, 1]) == 2) temp = temp * e * e;
+			temp = GCMoonData_sigma_b[i] * GCMath.sinDeg(GCMoonData_arg_b[i][0] * d
+								   + GCMoonData_arg_b[i][1] * m
+								   + GCMoonData_arg_b[i][2] * ms
+								   + GCMoonData_arg_b[i][3] * f);
+			if (Math.abs(GCMoonData_arg_b[i][1]) == 1) temp = temp * e;
+			if (Math.abs(GCMoonData_arg_b[i][1]) == 2) temp = temp * e * e;
 			sb = sb + temp;
 		}
 

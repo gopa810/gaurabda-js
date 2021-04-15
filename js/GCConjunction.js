@@ -98,7 +98,7 @@
 				// now it calculates actual time and zodiac of conjunction
 				var x;
 				if (prevDiff == nowDiff)
-					return 0;
+					return [0, null];
 				x = Math.abs(nowDiff) / Math.abs(prevDiff - nowDiff);
 				if (x < 0.5)
 				{
@@ -116,10 +116,10 @@
 				GCMath.putIn360(nowSun);
 				if (Math.abs(prevSun - nowSun) > 10.0)
 				{
-					return GCMath.putIn180(nowSun) + (GCMath.putIn180(prevSun) - GCMath.putIn180(nowSun)) * x, date
+					return [GCMath.putIn180(nowSun) + (GCMath.putIn180(prevSun) - GCMath.putIn180(nowSun)) * x, date]
 				}
 				else
-					return nowSun + (prevSun - nowSun) * x, date
+					return [nowSun + (prevSun - nowSun) * x, date]
 				//			return other2;
 			}
 			prevSun = nowSun;
@@ -129,7 +129,7 @@
 		}
 		while (bCont >= 0);
 
-		return 1000.0,null;
+		return [1000.0,null];
 	}
 
 	///////////////////////////////////////////////////////////////////////
@@ -195,7 +195,7 @@
 				// now it calculates actual time and zodiac of conjunction
 				var x;
 				if (prevDiff == nowDiff)
-					return 0;
+					return [0, null];
 				x = Math.Abs(nowDiff) / Math.Abs(prevDiff - nowDiff);
 				if (x < 0.5)
 				{
@@ -211,10 +211,10 @@
 				GCMath.putIn360(nowSun);
 				if (Math.Abs(prevSun - nowSun) > 10.0)
 				{
-					return GCMath.putIn180(nowSun) + (GCMath.putIn180(prevSun) - GCMath.putIn180(nowSun)) * x, date
+					return [GCMath.putIn180(nowSun) + (GCMath.putIn180(prevSun) - GCMath.putIn180(nowSun)) * x, date]
 				}
 				else
-					return nowSun + (prevSun - nowSun) * x, date
+					return [nowSun + (prevSun - nowSun) * x, date]
 			}
 			nowSun = prevSun;
 			nowMoon = prevMoon;
@@ -223,7 +223,7 @@
 		}
 		while (bCont >= 0);
 
-		return 1000.0, null;
+		return [1000.0, null];
 	}
 
 	/*********************************************************************/
@@ -275,6 +275,7 @@
 
 			longitudeMoon = GCCoreAstronomy.GetMoonLongitude(d, earth);
 			sunl = GCSunData.GetSunLongitude(d);
+			//console.log('count', counter, 'jday', jday, 'moon.long', longitudeMoon, 'sun.long', sunl);
 			l2 = GCMath.putIn180(longitudeMoon - sunl);
 			new_tit = GCMath.IntFloor(l2 / phi);
 
@@ -295,7 +296,7 @@
 		}
 		var found = new GregorianDateTime();
 		found.Set(d);
-		return sunl, found;
+		return [sunl, found];
 	}
 
 	/*********************************************************************/
@@ -368,7 +369,7 @@
 		}
 		var found = new GregorianDateTime();
 		found.Set(d);
-		return longitudeSun, found;
+		return [longitudeSun, found];
 	}
 
 }

@@ -19,6 +19,7 @@
 <script src="js/GCEarthData.js"></script>
 <script src="js/GCStrings.js"></script>
 <script src="js/TTimeZone.js"></script>
+<script src="js/GCLocation.js"></script>
 <script src="js/GCSunData.js"></script>
 <script src="js/GCMoonData.js"></script>
 <script src="js/GCCoreAstronomy.js"></script>
@@ -38,7 +39,6 @@
 <script src="js/TResultApp.js"></script>
 <script src="js/TResultCoreEvents.js"></script>
 <script src="js/TResultMasaList.js"></script>
-<script src="js/GCLocation.js"></script>
 
 
 
@@ -63,7 +63,25 @@
     document.write('<p>Display settings:', gds.getText(40))
     document.write('<p>GCStrings:', GCStrings.getString(0));
     document.write('<p>TCountry:', TCountry.GetCountryName(TCountry.CodeToInt('IN')));
-  //GregorianDateTime_Test()
+    GregorianDateTime_Test();
+    var tz = TTimeZone.FindTimeZoneByName('Europe/Bratislava');
+    document.write('<p>Timezone: ', tz.toString());
+    var ed = new GCEarthData();
+    ed.latitudeDeg = 45.0;
+    ed.longitudeDeg = 18.0;
+    ed.TimeZone = tz;
+    document.write('<p>Earth location:', ed.toString());
+    var loc = GCLocation.FindByName("Bratislava");
+    document.write('<p>GCLocation: ', loc.toString());
+    var d1 = new GregorianDateTime();
+    var jd = d1.GetJulianDetailed();
+    document.write('<h2>Astro data</h2>')
+    document.write('<p>Julian date: ', jd)
+    document.write('<p>Moon coords: ', GCMoonData.Calculate(jd));
+    var sunrise = GCSunData.CalcSunrise(d1, ed);
+    document.write('<p>Sunrise: ', sunrise);
+    [a, b] = GCConjunction.GetPrevConjunction(d1, false, ed);
+    document.write('<p>Prev Conjunction: ', a, '  ', b);
   //document.write("aaaa")
   </script>
 
