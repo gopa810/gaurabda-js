@@ -96,7 +96,7 @@ class GCNaksatra {
 			}
 		}
 
-		return new_naks, d;
+		return [new_naks, d];
 	}
 
 	/*********************************************************************/
@@ -161,7 +161,7 @@ class GCNaksatra {
 
 		}
 
-		return new_naks, d;
+		return [new_naks, d];
 	}
 
 	static GetPadaText(i)

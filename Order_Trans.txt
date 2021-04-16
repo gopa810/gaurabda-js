@@ -17,11 +17,11 @@
 - GCMoonData
 - GCSunData
 - GCConjunction
-GCNaksatra
-GCSankranti
-GCDayData
-GCTithi
-GCYoga
+- GCNaksatra
+- GCSankranti
+- GCDayData (GCAstroData)
+- GCTithi
+- GCYoga
 - LocationList
 CustomEventList
 GCGlobal

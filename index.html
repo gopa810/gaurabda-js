@@ -22,6 +22,7 @@
 <script src="js/GCLocation.js"></script>
 <script src="js/GCSunData.js"></script>
 <script src="js/GCMoonData.js"></script>
+<script src="js/GCSankranti.js"></script>
 <script src="js/GCCoreAstronomy.js"></script>
 <script src="js/GCCalendar.js"></script>
 <script src="js/Vaisnavaday.js"></script>
@@ -82,7 +83,19 @@
     document.write('<p>Sunrise: ', sunrise);
     [a, b] = GCConjunction.GetPrevConjunction(d1, false, ed);
     document.write('<p>Prev Conjunction: ', a, '  ', b);
-  //document.write("aaaa")
+    //document.write("aaaa")
+    [nak, dnak] = GCNaksatra.GetNextNaksatra(ed, d1);
+    document.write('<p>Naksatra: ', nak, ', date:', dnak.c_str());
+    [dsan, zod] = GCSankranti.GetNextSankranti(d1, ed);
+    document.write('<p>Sankranti:', zod, ', date:', dsan.c_str());
+    ad = new GCAstroData();
+    ad.DayCalc(d1, ed);
+    document.write('<p>DayData:', ad);
+    [tt, td] = GCTithi.GetNextTithiStart(ed, d1);
+    document.write('<p>GCTithi: ', GCTithi.GetName(tt), ', ', td.c_str());
+    [yg, yd] = GCYoga.GetNextYogaStart(ed, d1);
+    document.write('<p>GCYoga: ', GCYoga.GetName(yg), ' ', yd.c_str());
+
   </script>
 
 

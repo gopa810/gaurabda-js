@@ -13,14 +13,14 @@ class GCSankranti {
 	{
 		return sankrantiDetermineType;
 	}
-	static SetSankrantiType(int i)
+	static SetSankrantiType(i)
 	{
-		int prev = sankrantiDetermineType;
-		GsankrantiDetermineType = i;
+		var prev = sankrantiDetermineType;
+		sankrantiDetermineType = i;
 		return prev;
 	}
 
-	static GetSankMethodName(int i)
+	static GetSankMethodName(i)
 	{
 		return GCSankranti_snam[i]
 	}
@@ -75,6 +75,6 @@ class GCSankranti {
 			}
 		}
 
-		return d,zodiac
+		return [d,zodiac]
 	}
 }

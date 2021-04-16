@@ -94,7 +94,7 @@ class GCTithi
 				l1 = l2;
 			}
 		}
-		return new_tit, d;
+		return [new_tit, d];
 	}
 
 	/*********************************************************************/
@@ -159,7 +159,7 @@ class GCTithi
 		}
 		//	nextDate.shour += startDate.tzone / 24.0;
 		//	nextDate.NormalizeValues();
-		return new_tit, d;
+		return [new_tit, d];
 	}
 
 	/*
@@ -182,7 +182,7 @@ class GCTithi
 		titBeg = d1.shour + d1.GetJulian() - vc.GetJulian();
 		titEnd = d2.shour + d2.GetJulian() - vc.GetJulian();
 
-		return (titEnd - titBeg),titBeg,titEnd;
+		return [(titEnd - titBeg),titBeg,titEnd];
 	}
 
 	/*********************************************************************/
@@ -249,7 +249,7 @@ class GCTithi
 		if (i >= 30)
 		{
 			d.year = d.month = d.day = -1;
-			return d,null;
+			return [d,null];
 		}
 
 		// we found masa and paksa
@@ -367,7 +367,7 @@ class GCTithi
 			//d = d1;
 			//d.shour += 0.02;
 			[t2,d2] = GCTithi.GetNextTithiStart(earth, d)
-			return d1,d2;
+			return [d1,d2];
 		}
 		else if (nType == 2)
 		{
@@ -380,7 +380,7 @@ class GCTithi
 			d.NormalizeValues();
 			[t2,d2] = GCTithi.GetNextTithiStart(earth, d)
 
-			return d1,d2;
+			return [d1,d2];
 		}
 
 		// if nType == 0, then this algoritmus has some failure
@@ -397,7 +397,7 @@ class GCTithi
 			d.Set(start);
 			endTithi.Set(end);
 		}
-		return d,endTithi;
+		return [d,endTithi];
 	}
 
 

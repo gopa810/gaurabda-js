@@ -20,6 +20,11 @@
 		this.sunSet = new GCHourTime()
 	}
 
+	toString() {
+		return sprintf('Julianday: %f, sunrise: %s, noon: %s, sunset: %s', this.JulianDay,
+		    this.sunRise.toString(), this.sunNoon.toString(), this.sunSet.toString() );
+	}
+
 	/*public override GSCore GetPropertyValue(string Token)
 	{
 		GSCore result = null;
@@ -193,7 +198,7 @@
 		this.sunNoon.TotalDays = (this.sunSet.TotalDays + this.sunRise.TotalDays) / 2;
 		this.sunNoon.longitude = (this.sunRise.longitude + this.sunSet.longitude) / 2;
 
-		date.shour = sunRise.TotalDays;
+		date.shour = this.sunRise.TotalDays;
 
 		// date.shour is [0..1] time of sunrise in local timezone time
 		this.JulianDay = date.GetJulianDetailed();
@@ -210,11 +215,11 @@
 		// masa
 		this.Masa = -1;
 
-		date.shour = sunSet.TotalDays;
+		//date.shour = sunSet.TotalDays;
 		this.sunSet.longitudeMoon = GCCoreAstronomy.GetMoonLongitude(date, earth);
 
 
-		date.shour = sunArunodaya.TotalDays;
+		//date.shour = sunArunodaya.TotalDays;
 		this.sunArunodaya.longitudeMoon = GCCoreAstronomy.GetMoonLongitude(date, earth);
 
 

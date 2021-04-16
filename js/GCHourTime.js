@@ -99,7 +99,7 @@ class GCHourTime
 	}
 	set TotalDays(value)
 	{
-		SetDayTime(value);
+		this.SetDayTime(value);
 	}
 
 	get TotalHours()
@@ -254,22 +254,22 @@ class GCHourTime
 	{
 		var time_hr = d * 24.0;
 
-		this.hour = Convert.ToInt32(Math.Floor(time_hr));
+		this.hour = Convert.ToInt32(Math.floor(time_hr));
 
 		// minute
 		time_hr -= this.hour;
 		time_hr *= 60;
-		this.min = Convert.ToInt32(Math.Floor(time_hr));
+		this.min = Convert.ToInt32(Math.floor(time_hr));
 
 		// second
 		time_hr -= this.min;
 		time_hr *= 60;
-		this.sec = Convert.ToInt32(Math.Floor(time_hr));
+		this.sec = Convert.ToInt32(Math.floor(time_hr));
 
 		// miliseconds
 		time_hr -= this.sec;
 		time_hr *= 1000;
-		this.mili = Convert.ToInt32(Math.Floor(time_hr));
+		this.mili = Convert.ToInt32(Math.floor(time_hr));
 	}
 
 	////////////////////////////////////////////////////////////////

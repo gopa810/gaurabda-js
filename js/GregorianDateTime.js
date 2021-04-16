@@ -72,15 +72,15 @@ class GregorianDateTime {
 	}
   
 	getStringValue() {
-		return ToString()
+		return toString()
 	}
 
 	ShortTimeString() {
-		return this.Format("{hour}:{minRound}", h, m);
+		return this.Format("{hour}:{minRound}", this.GetHour(), this.GetMinute());
 	}
 
 	LongTimeString() {
-		return this.Format("{hour}:{min}:{sec}", h, m, s);
+		return this.Format("{hour}:{min}:{sec}", this.GetHour(), this.GetMinute(), this.GetSecond());
 	}
 	
 	c_str() {

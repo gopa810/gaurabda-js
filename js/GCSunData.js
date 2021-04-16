@@ -289,7 +289,7 @@ class GCSunData {
 		var tempSunset = 180.0;
 		var sun = new GCSunData();
 
-		for (i = 0; i < 3; i++)
+		for (var i = 0; i < 3; i++)
 		{
 			sun.SunPosition(vct, earth, tempSunset - 180.0);
 

@@ -17,7 +17,7 @@
 		longitudeMoon = GCCoreAstronomy.GetMoonLongitude(d, ed);
 		longitudeSun = GCCoreAstronomy.GetSunLongitude(d, ed);
 		l1 = GCMath.putIn360( longitudeMoon + longitudeSun - 2*ayanamsha);
-		prev_tit = Convert.ToInt32(Math.Floor(l1/phi));
+		prev_tit = Convert.ToInt32(Math.floor(l1/phi));
 
 		var counter = 0;
 		while(counter < 20)
@@ -52,7 +52,7 @@
 			}
 		}
 
-		return new_tit, d;
+		return [new_tit, d];
 	}
 
 	static GetName(nYoga)
