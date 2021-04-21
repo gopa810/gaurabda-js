@@ -115,7 +115,7 @@ class GCMoonData {
 			prev_elev = elev;
 		}
 
-    return result;
+    	return result;
 	}
 
 	static GetNextMoonRasi(ed, startDate)
@@ -169,7 +169,7 @@ class GCMoonData {
 		}
 		var nextDate = new GregorianDateTime();
 		nextDate.Set(d);
-		return new_naks, nextDate;
+		return [new_naks, nextDate];
 	}
 
 	//==================================================================================

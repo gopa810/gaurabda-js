@@ -229,9 +229,6 @@ class GCSunData {
 			}
 		}
 
-		console.log('sun.longitude', sun.longitudeDeg);
-		console.log('tempSunrise', tempSunrise)
-
 		var result = new GCHourTime();
 		result.longitude = sun.longitudeDeg;
 		result.SetDegTime(tempSunrise + earth.OffsetUtcHours * 15.0);

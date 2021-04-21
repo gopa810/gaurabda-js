@@ -28,10 +28,10 @@
       }
 
 
-      Sort()
-      {
-        this.p_events.sort(function(a,b) { a.Time - b.Time; })
-      }
+    Sort()
+    {
+        this.p_events.sort(function(a,b) { return a.Time - b.Time; })
+    }
 
 
       LoadFile(filePath)
@@ -53,26 +53,24 @@
       }
 
       //CalculateEvents(GCLocation loc, int nYear)
-      CalculateEvents(loc,nYear) {
+      CalculateEvents(loc,nYear,nMonth) {
           //GCSunData sun = new GCSunData();
           //DstTypeChange ndst = DstTypeChange.DstOff;
           var nData;
-          var inEvents = this;
           this.Clear();
           this.EarthLocation = loc;
           this.Year = nYear;
-          var vcStart = new GregorianDateTime(Year - 1, 12, 29);
-          var vcEnd = new GregorianDateTime(Year + 1, 1, 2);
+          var vcStart = GregorianDateTime.fromComponents(this.Year - 1, 12, 29);
+          var vcEnd = GregorianDateTime.fromComponents(this.Year + 1, 1, 2);
+          if (nMonth != undefined) {
+              vcStart = GregorianDateTime.fromComponents(nYear, nMonth, 1);
+              vcEnd = GregorianDateTime.fromComponents(nYear, nMonth, GregorianDateTime.GetMonthMaxDays(nYear,nMonth));
+          }
 
-          var vc = new GregorianDateTime();
-          var vcAdd = new GregorianDateTime();
+          var vc = GregorianDateTime.fromDate(vcStart).setOffset(loc.OffsetUtcHours);
+          var vcAdd = GregorianDateTime.fromDate(vc).InitWeekDay();
           var vcNext = new GregorianDateTime();
           var earth = loc.GetEarthData();
-
-          vc.Set(vcStart);
-          vc.TimezoneHours = loc.OffsetUtcHours;
-          vcAdd.Set(vc);
-          vcAdd.InitWeekDay();
 
           /*while (vcAdd.IsBeforeThis(vcEnd))
           {
@@ -81,7 +79,7 @@
           }*/
 
 
-          if (Full || gds.getValue(GCDS.COREEVENTS_TITHI) != 0)
+          if (this.Full || gds.getValue(GCDS.COREEVENTS_TITHI) != 0)
           {
               vcAdd.Set(vc);
               vcAdd.shour = 0.0;
@@ -92,7 +90,7 @@
                   {
                       //vcNext.InitWeekDay();
                       //ndst = loc.TimeZone.DetermineDaylightChange(vcNext);
-                      inEvents.AddEvent(vcNext, CoreEventType.CCTYPE_TITHI, nData);
+                      this.AddEvent(vcNext, CoreEventType.CCTYPE_TITHI, nData);
                   }
                   else
                   {
@@ -108,7 +106,7 @@
               }
           }
 
-          if (Full || gds.getValue(GCDS.COREEVENTS_NAKSATRA) != 0)
+          if (this.Full || gds.getValue(GCDS.COREEVENTS_NAKSATRA) != 0)
           {
               vcAdd.Set(vc);
               vcAdd.shour = 0.0;
@@ -119,7 +117,7 @@
                   {
                       //vcNext.InitWeekDay();
                       //ndst = loc.TimeZone.DetermineDaylightChange(vcNext);
-                      inEvents.AddEvent(vcNext, CoreEventType.CCTYPE_NAKS, nData);
+                      this.AddEvent(vcNext, CoreEventType.CCTYPE_NAKS, nData);
                   }
                   else
                   {
@@ -135,7 +133,7 @@
               }
           }
 
-          if (Full || gds.getValue(GCDS.COREEVENTS_YOGA) != 0)
+          if (this.Full || gds.getValue(GCDS.COREEVENTS_YOGA) != 0)
           {
               vcAdd.Set(vc);
               vcAdd.shour = 0.0;
@@ -146,7 +144,7 @@
                   {
                       //vcNext.InitWeekDay();
                       //ndst = loc.TimeZone.DetermineDaylightChange(vcNext);
-                      inEvents.AddEvent(vcNext, CoreEventType.CCTYPE_YOGA, nData);
+                      this.AddEvent(vcNext, CoreEventType.CCTYPE_YOGA, nData);
                   }
                   else
                   {
@@ -162,7 +160,7 @@
               }
           }
 
-          if (Full || gds.getValue(GCDS.COREEVENTS_SANKRANTI) != 0)
+          if (this.Full || gds.getValue(GCDS.COREEVENTS_SANKRANTI) != 0)
           {
               vcNext = new GregorianDateTime();
               vcAdd.Set(vc);
@@ -176,7 +174,7 @@
                   {
                       //vcNext.InitWeekDay();
                       //ndst = loc.TimeZone.DetermineDaylightChange(vcNext);
-                      inEvents.AddEvent(vcNext, CoreEventType.CCTYPE_SANK, nData);
+                      this.AddEvent(vcNext, CoreEventType.CCTYPE_SANK, nData);
                   }
                   else
                   {
@@ -187,18 +185,20 @@
               }
           }
 
-          if (Full || gds.getValue(GCDS.COREEVENTS_MOONRASI) != 0)
+          if (this.Full || gds.getValue(GCDS.COREEVENTS_MOONRASI) != 0)
           {
               vcAdd.Set(vc);
               vcAdd.shour = 0.0;
+              var vmr;
               while (vcAdd.IsBeforeThis(vcEnd))
               {
-                  [nData,vcNext] = GCMoonData.GetNextMoonRasi(earth, vcAdd);
+                  [nData, vmr] = GCMoonData.GetNextMoonRasi(earth, vcAdd);
+                  vcNext.Set(vmr);
                   if (vcNext.GetDayInteger() < vcEnd.GetDayInteger())
                   {
                       //vcNext.InitWeekDay();
                       //ndst = loc.TimeZone.DetermineDaylightChange(vcNext);
-                      inEvents.AddEvent(vcNext, CoreEventType.CCTYPE_M_RASI, nData);
+                      this.AddEvent(vcNext, CoreEventType.CCTYPE_M_RASI, nData);
                   }
                   else
                   {
@@ -210,7 +210,7 @@
               }
 
           }
-          if (Full || gds.getValue(GCDS.COREEVENTS_CONJUNCTION) != 0)
+          if (this.Full || gds.getValue(GCDS.COREEVENTS_CONJUNCTION) != 0)
           {
               var dlong;
               vcAdd.Set(vc);
@@ -222,7 +222,7 @@
                   {
                       vcNext.InitWeekDay();
                       //ndst = loc.TimeZone.DetermineDaylightChange(vcNext);
-                      inEvents.AddEvent(vcNext, CoreEventType.CCTYPE_CONJ, GCRasi.GetRasi(dlong, GCAyanamsha.GetAyanamsa(vcNext.GetJulianComplete())));
+                      this.AddEvent(vcNext, CoreEventType.CCTYPE_CONJ, GCRasi.GetRasi(dlong, GCAyanamsha.GetAyanamsa(vcNext.GetJulianComplete())));
                   }
                   else
                   {
@@ -233,43 +233,41 @@
               }
           }
 
-          inEvents.Sort();
+          this.Sort();
       }
 
       //GetCoreEvents(List<TCoreEvent> coreEvents, long utcDayStart, long utcDayEnd)
-      GetCoreEvents(coreEvents, utcDayStart, utcDayEnd) {
-          if (p_events.length == 0)
-              return;
-
-          var first = p_events[0];
-          var last = p_events[p_events.Count - 1];
-
-          if (first.Time > utcDayEnd || last.Time < utcDayStart || first.Time == last.Time)
-              return;
-
-          var indexf =  (utcDayStart - first.Time) * 1.0 * p_events.Count / (last.Time - first.Time);
-          var index = parseInt(indexf.toString());
-          var max = p_events.length - 1;
-          while (index > 0 && index <= max && p_events[index].Time > utcDayStart)
-              index--;
-
-          while (index > 0 && index < max && p_events[index].Time < utcDayStart)
-              index++;
-
-          while(index > 0 && index < max && p_events[index].Time < utcDayEnd)
-          {
-              coreEvents.push(p_events[index]);
-              index++;
-          }
+        GetCoreEvents(coreEvents, utcDayStart, utcDayEnd) {
+            for(var ce of this.p_events) {
+                if (ce.Time >= utcDayStart && ce.Time < utcDayEnd) {
+                    coreEvents.push(ce);
+                }
+            }
           return coreEvents;
-      }
-  }
+        }
+    }
 
   class TCoreEventCollection
   {
     constructor() {
       this.list = []
     }
+    length() {
+        return this.list.length;
+    }
+    push(a) 
+    {
+        this.list.push(a)
+    }
+
+    items() {
+        return this.list;
+    }
+
+    item(idx) {
+        return this.list[idx];
+    }
+
     InsertByTime(/*TCoreEvent*/ coreEvent)
     {
       var i;
@@ -290,7 +288,7 @@
             idx = 0;
         }
         var i;
-        for(i = idx; i < Count; i++)
+        for(i = idx; i < this.list.length; i++)
         {
             if (this.list[i].nType == nType)
                 return i;
@@ -300,8 +298,8 @@
     }
 
     FindBackIndexOf(/*int*/ nType, /*int*/ idx) {
-        if (idx >= Count) {
-            idx = Count - 1;
+        if (idx >= this.list.length) {
+            idx = this.list.length - 1;
         }
         if (idx < 0) {
             return -1;

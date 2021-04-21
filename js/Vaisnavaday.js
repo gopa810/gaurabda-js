@@ -19,6 +19,11 @@ class VAISNAVAEVENT
 			return text;
 	}
 
+	toString() {
+		return sprintf("prio: %d, dispItem: %d, text: %s, fast: %d, subject: %s, spec:%d", this.prio,
+		    this.dispItem, this.text, this.fasttype, this.fastsubject, this.spec);
+	}
+
 }
 
 class CoreEventFindRec
@@ -43,6 +48,7 @@ class VAISNAVADAY
 		this.moonrise.SetValue(0)
 		this.moonset = new GCHourTime()
 		this.moonset.SetValue(0)
+		this.earth = null;
 		// astronomical data from astro-sub-layer
 		this.astrodata = null
 
@@ -63,7 +69,7 @@ class VAISNAVADAY
 		//
 		this.nMahadvadasiID = MahadvadasiType.EV_NULL
 		this.ekadasi_vrata_name = ""
-		this.ekadasi_parana = false
+		//this.ekadasi_parana = false
 		this.eparana_time1 = null
 		this.eparana_time2 = null
 
@@ -80,15 +86,26 @@ class VAISNAVADAY
 	}
 
 
-	ToString() {
-		return GCStrings.Format("{0}, Fast:{1}, Tithi:{2}, Masa:{3}", date.ToString(), GCStrings.GetFastingName(this.nFastID), GCTithi.GetName(this.astrodata.sunRise.Tithi),
-			GCMasa.GetName(astrodata.Masa));
+	toString() {
+		return sprintf("%s, Fast:%s, Tithi:%s, Masa:%s", this.date.toString(),
+			GCStrings.GetFastingName(this.nFastID),
+			GCTithi.GetName(this.astrodata.sunRise.Tithi),
+			GCMasa.GetName(this.astrodata.Masa));
+	}
+
+	get astro()
+	{
+		return this.astrodata;
+	}
+
+	get fastType() {
+		return this.nFastID;
 	}
 
 	GetGregorianDateTime(ce)
 	{
-		var gdt = new GregorianDateTime(date);
-		gdt.shour = (ce.GetDstTime(BiasMinutes * 60) - UtcDayStart) / 86400.0;
+		var gdt = new GregorianDateTime(this.date);
+		gdt.shour = (ce.GetDstTime(this.BiasMinutes * 60) - this.UtcDayStart) / 86400.0;
 		return gdt;
 	}
 
@@ -302,7 +319,7 @@ class VAISNAVADAY
 			return 0;
 
 		t.nMahadvadasiID = MahadvadasiType.EV_NULL;
-		t.ekadasi_parana = true;
+		//t.ekadasi_parana = true;
 		t.nFastID = FastType.FAST_NULL;
 
 		var naksEnd;
@@ -314,7 +331,7 @@ class VAISNAVADAY
 		var sunSet = t.FindCoreEvent(CoreEventType.CCTYPE_S_SET);
 		if (sunRise == null || sunSet == null)
 		{
-			GCLog.Write("Cannot find sunrise of sunset for day " + t.date.ToString());
+			console.log("Cannot find sunrise of sunset for day ", t.date);
 			return 0;
 		}
 
@@ -324,55 +341,53 @@ class VAISNAVADAY
 		third_day.nDst = sunRise.nDst
 		third_day.Time = (sunSet.Time - sunRise.Time) / 3 + sunRise.Time
 
-		var tempTimes = GetRecentCoreTimes(CoreEventType.CCTYPE_S_RISE, CoreEventType.CCTYPE_TITHI, 1);
-		if (tempTimes.Count != 1)
+		var tempTimes = this.GetRecentCoreTimes(CoreEventType.CCTYPE_S_RISE, CoreEventType.CCTYPE_TITHI, 1);
+		if (tempTimes.length != 1)
 		{
-			GCLog.Write("Start or End of tithi was not found for date " + t.ToString());
+			console.log("Start of tithi was not found for date " + t.toString());
 			return 0;
 		}
 		else
 		{
-			tithiStart = tempTimes[0].coreEvent;
+			tithiStart = new TCoreEvent(tempTimes[0].coreEvent);
 		}
 
-		tempTimes = GetNextCoreTimes(CoreEventType.CCTYPE_S_RISE, CoreEventType.CCTYPE_TITHI, 1);
-		if (tempTimes.Count != 1)
+		tempTimes = this.GetNextCoreTimes(CoreEventType.CCTYPE_S_RISE, CoreEventType.CCTYPE_TITHI, 1);
+		if (tempTimes.length != 1)
 		{
-			GCLog.Write("End of tithi was not found for date " + t.ToString());
-			tempTimes = GetNextCoreTimes(CoreEventType.CCTYPE_S_RISE, CoreEventType.CCTYPE_TITHI, 1);
+			console.log("End of tithi was not found for date " + t.toString());
 			return 0;
 		}
 		else
 		{
 			tithiEnd = new TCoreEvent(tempTimes[0].coreEvent)
 			tithiEnd.nType = CoreEventType.CCTYPE_TITHI_END
-			tithiEnd.ApplyDstType(UtcDayStart, DstDayType);
+			tithiEnd.ApplyDstType(this.UtcDayStart, this.DstDayType);
 		}
 
-		if (Previous == null)
+		if (this.Previous == null)
 			return 0;
 
-		tempTimes = Previous.GetNextCoreTimes(CoreEventType.CCTYPE_S_RISE, CoreEventType.CCTYPE_NAKS, 1);
-		if (tempTimes.Count != 1)
+		tempTimes = this.Previous.GetNextCoreTimes(CoreEventType.CCTYPE_S_RISE, CoreEventType.CCTYPE_NAKS, 1);
+		if (tempTimes.length != 1)
 		{
-			GCLog.Write("End of naksatra was not found for date " + t.ToString());
+			console.log("End of naksatra was not found for date " + t.toString());
 			return 0;
 		}
 		else
 		{
 			naksEnd = new TCoreEvent(tempTimes[0].coreEvent)
 			naksEnd.nType = CoreEventType.CCTYPE_NAKS_END
-			naksEnd.ApplyDstType(UtcDayStart, DstDayType);
+			naksEnd.ApplyDstType(this.UtcDayStart, this.DstDayType);
 
 		}
 
-		tithi_quart = new TCoreEvent()
+		var tithi_quart = new TCoreEvent()
 		tithi_quart.nType = CoreEventType.CCTYPE_TITHI_QUARTER
 		tithi_quart.nData = tithiStart.nData
 		tithi_quart.Time = (tithiEnd.Time - tithiStart.Time) / 4 + tithiStart.Time
 		tithi_quart.nDst = tithiStart.nDst
-		tithi_quart.ApplyDstType(UtcDayStart, DstDayType);
-
+		tithi_quart.ApplyDstType(this.UtcDayStart, this.DstDayType);
 
 		switch (t.Previous.nMahadvadasiID)
 		{
@@ -481,10 +496,10 @@ class VAISNAVADAY
 
 	FindCoreEvent(nType)
 	{
-		for (i = 0; i < this.coreEvents.Count; i++)
+		for (var ce of this.coreEvents.items())
 		{
-			if (this.coreEvents[i].nType == nType)
-				return this.coreEvents[i];
+			if (ce.nType == nType)
+				return ce;
 		}
 
 		return null
@@ -494,10 +509,10 @@ class VAISNAVADAY
 	{
 		var dayList = [];
 		var cursor = this;
-		var idx = coreEvents.FindIndexOf(nTypeStart, idx);
+		var idx = cursor.coreEvents.FindIndexOf(nTypeStart, 0);
 		if (idx >= 0)
 		{
-			while (cursor != null && dayList.Count < count)
+			while (cursor != null && dayList.length < count)
 			{
 				idx = cursor.coreEvents.FindBackIndexOf(nTypeFind, idx - 1);
 				if (idx < 0)
@@ -509,9 +524,9 @@ class VAISNAVADAY
 				{
 					var cer = new CoreEventFindRec();
 					cer.day = cursor;
-					cer.coreEvent = cursor.coreEvents[idx];
-					cer.dateTimeOfEvent = cursor.GetGregorianDateTime(cursor.coreEvents[idx]);
-					dayList.Insert(0, cer);
+					cer.coreEvent = cursor.coreEvents.item(idx);
+					cer.dateTimeOfEvent = cursor.GetGregorianDateTime(cursor.coreEvents.item(idx));
+					dayList.splice(0, 0, cer);
 				}
 			}
 		}
@@ -524,10 +539,10 @@ class VAISNAVADAY
 	{
 		var dayList = [];
 		var cursor = this;
-		var idx = coreEvents.FindIndexOf(nTypeStart, idx);
+		var idx = this.coreEvents.FindIndexOf(nTypeStart, 0);
 		if (idx >= 0)
 		{
-			while (cursor != null && dayList.Count < count)
+			while (cursor != null && dayList.length < count)
 			{
 				idx = cursor.coreEvents.FindIndexOf(nTypeFind, idx++);
 				if (idx < 0)
@@ -539,9 +554,9 @@ class VAISNAVADAY
 				{
 					var cer = new CoreEventFindRec();
 					cer.day = cursor;
-					cer.coreEvent = cursor.coreEvents[idx];
-					cer.dateTimeOfEvent = cursor.GetGregorianDateTime(cursor.coreEvents[idx]);
-					dayList.add(cer);
+					cer.coreEvent = cursor.coreEvents.item(idx);
+					cer.dateTimeOfEvent = cursor.GetGregorianDateTime(cursor.coreEvents.item(idx));
+					dayList.push(cer);
 				}
 			}
 		}
@@ -597,13 +612,13 @@ class VAISNAVADAY
 			// fasting day
 			mahaDay.nFastID = FastType.FAST_EKADASI;
 			mahaDay.ekadasi_vrata_name = GCEkadasi.GetEkadasiName(t.astrodata.Masa, t.astrodata.sunRise.Paksa);
-			mahaDay.ekadasi_parana = false;
+			//mahaDay.ekadasi_parana = false;
 			mahaDay.eparana_time1 = null;
 			mahaDay.eparana_time2 = null;
 
 			// parana day
 			mahaDay.Next.nFastID = FastType.FAST_NULL;
-			mahaDay.Next.ekadasi_parana = true;
+			//mahaDay.Next.ekadasi_parana = true;
 			mahaDay.Next.eparana_time1 = null;
 			mahaDay.Next.eparana_time2 = null;
 		}
@@ -712,14 +727,15 @@ class VAISNAVADAY
 		var str = ""
 		var e1, e2;
 
-		e1 = GetGregorianDateTime(this.eparana_time1);
-
+		console.log('GetTextEP eparana_time1=', this.eparana_time1);
+		e1 = this.GetGregorianDateTime(this.eparana_time1);
+		console.log('GetTextEP e1=', e1);
 		if (this.eparana_time2 != null)
 		{
-			e2 = GetGregorianDateTime(this.eparana_time2);
+			e2 = this.GetGregorianDateTime(this.eparana_time2);
 
 			if (gds.getValue(50) == 1)
-				str = GCStrings.Format("{0} {1} ({2}) - {3} ({4}) {5}", GCStrings.getString(60),
+				str = sprintf("%s %s (%s) - %s (%s) %s", GCStrings.getString(60),
 					e1.ShortTimeString(), GCEkadasi.GetParanaReasonText(this.eparana_time1.nType),
 					e2.ShortTimeString(), GCEkadasi.GetParanaReasonText(this.eparana_time2.nType),
 					GCStrings.GetDSTSignature(this.BiasMinutes));
@@ -781,105 +797,129 @@ class VAISNAVADAY
 		var dc = new VAISNAVAEVENT();
 
 		dc.prio = priority;
-		dc.dispItem = dispItem;
+		dc.dispItem = parseInt(dispItem);
 		dc.text = text;
 
-		this.dayEvents.Add(dc);
+		this.dayEvents.push(dc);
 
 		return dc;
 	}
 
-	Format(format,args)
+	get prevTithiName()
 	{
-		if (format.IndexOf("{day}") >= 0)
-			format = format.Replace("{day}", date.day.ToString());
-		if (format.IndexOf("{month}") >= 0)
-			format = format.Replace("{month}", date.month.ToString());
-		if (format.IndexOf("{monthAbr}") >= 0)
-			format = format.Replace("{monthAbr}", GregorianDateTime.GetMonthName(date.month));
-		if (format.IndexOf("{monthName}") >= 0)
-			format = format.Replace("{monthName}", GregorianDateTime.GetMonthName(date.month));
-		if (format.IndexOf("{year}") >= 0)
-			format = format.Replace("{year}", date.year.ToString());
-		if (format.IndexOf("{hour}") >= 0)
-			format = format.Replace("{hour}", date.GetHour().ToString("D2"));
-		if (format.IndexOf("{min}") >= 0)
-			format = format.Replace("{min}", date.GetMinute().ToString("D2"));
-		if (format.IndexOf("{minRound}") >= 0)
-			format = format.Replace("{minRound}", date.GetMinuteRound().ToString("D2"));
-		if (format.IndexOf("{sec}") >= 0)
-			format = format.Replace("{sec}", date.GetSecond().ToString("D2"));
+		return GCTithi.GetName((this.astrodata.sunRise.Tithi + 29) % 30);		
+	}
 
-		if (format.IndexOf("{masaName}") >= 0)
-			format = format.Replace("{masaName}", GCMasa.GetName(astrodata.Masa));
-		if (format.IndexOf("{gaurabdaYear}") >= 0)
-			format = format.Replace("{gaurabdaYear}", astrodata.GaurabdaYear.ToString());
-		if (format.IndexOf("{tithiName}") >= 0)
-			format = format.Replace("{tithiName}", GCTithi.GetName(astrodata.sunRise.Tithi));
-		if (format.IndexOf("{prevTithiName}") >= 0)
-			format = format.Replace("{prevTithiName}", GCTithi.GetName((astrodata.sunRise.Tithi + 29) % 30));
-		if (format.IndexOf("{nextTithiName}") >= 0)
-			format = format.Replace("{nextTithiName}", GCTithi.GetName((astrodata.sunRise.Tithi + 1) % 30));
-		if (format.IndexOf("{paksaName}") >= 0)
-			format = format.Replace("{paksaName}", GCPaksa.GetName(astrodata.sunRise.Paksa));
-		if (format.IndexOf("{yogaName}") >= 0)
-			format = format.Replace("{yogaName}", GCYoga.GetName(astrodata.sunRise.Yoga));
-		if (format.IndexOf("{naksatraName}") >= 0)
-			format = format.Replace("{naksatraName}", GCNaksatra.GetName(astrodata.sunRise.Naksatra));
-		if (format.IndexOf("{naksatraElapse}") >= 0)
-			format = format.Replace("{naksatraElapse}", astrodata.sunRise.NaksatraElapse.ToString("P2"));
-		if (format.IndexOf("{naksatraPada}") >= 0)
-			format = format.Replace("{naksatraPada}", GCNaksatra.GetPadaText(astrodata.sunRise.NaksatraPada));
+	get sunRiseSec()
+	{
+		return this.astro.sunRise.TotalSeconds;
+	}
 
-		if (format.IndexOf("{sankranti.day}") >= 0)
-			format = format.Replace("{sankranti.day}", sankranti_day.day.ToString());
-		if (format.IndexOf("{sankranti.month}") >= 0)
-			format = format.Replace("{sankranti.month}", sankranti_day.month.ToString());
-		if (format.IndexOf("{sankranti.monthAbr}") >= 0)
-			format = format.Replace("{sankranti.monthAbr}", GregorianDateTime.GetMonthName(sankranti_day.month));
-		if (format.IndexOf("{sankranti.monthName}") >= 0)
-			format = format.Replace("{sankranti.monthName}", GregorianDateTime.GetMonthName(sankranti_day.month));
-		if (format.IndexOf("{sankranti.hour}") >= 0)
-			format = format.Replace("{sankranti.hour}", sankranti_day.GetHour().ToString("D2"));
-		if (format.IndexOf("{sankranti.min}") >= 0)
-			format = format.Replace("{sankranti.min}", sankranti_day.GetMinute().ToString("D2"));
-		if (format.IndexOf("{sankranti.minRound}") >= 0)
-			format = format.Replace("{sankranti.minRound}", sankranti_day.GetMinuteRound().ToString("D2"));
-		if (format.IndexOf("{sankranti.sec}") >= 0)
-			format = format.Replace("{sankranti.sec}", sankranti_day.GetSecond().ToString("D2"));
-		if (format.IndexOf("{sankranti.rasiNameEn}") >= 0)
-			format = format.Replace("{sankranti.rasiNameEn}", GCRasi.GetNameEn(sankranti_zodiac));
-		if (format.IndexOf("{sankranti.rasiName}") >= 0)
-			format = format.Replace("{sankranti.rasiName}", GCRasi.GetName(sankranti_zodiac));
+	get moonRiseSec()
+	{
+		if (this.moonrise.hour <= 0) {
+			var mres = GCMoonData_CalcMoonTimes(this.earth, this.date, this.BiasMinutes/60.0);
+			this.moonrise = mres.moonrise;
+			this.moonset = mres.moonset;
+		}
+		return this.moonrise.TotalSeconds;
+	}
 
-		if (format.IndexOf("{dstSig}") >= 0)
-			format = format.Replace("{dstSig}", GCStrings.GetDSTSignature(BiasMinutes));
+	Format(format, args)
+	{
+		if (format.indexOf("{day}") >= 0)
+			format = format.replace("{day}", this.date.day.toString());
+		if (format.indexOf("{month}") >= 0)
+			format = format.replace("{month}", this.date.month.toString());
+		if (format.indexOf("{monthAbr}") >= 0)
+			format = format.replace("{monthAbr}", GregorianDateTime.GetMonthName(this.date.month));
+		if (format.indexOf("{monthName}") >= 0)
+			format = format.replace("{monthName}", GregorianDateTime.GetMonthName(this.date.month));
+		if (format.indexOf("{year}") >= 0)
+			format = format.replace("{year}", this.date.year.toString());
+		if (format.indexOf("{hour}") >= 0)
+			format = format.replace("{hour}", sprintf("%02d", this.date.GetHour()));
+		if (format.indexOf("{min}") >= 0)
+			format = format.replace("{min}", sprintf("%02d", this.date.GetMinute()));
+		if (format.indexOf("{minRound}") >= 0)
+			format = format.replace("{minRound}", sprintf("%02d", this.date.GetMinuteRound()));
+		if (format.indexOf("{sec}") >= 0)
+			format = format.replace("{sec}", sprintf("%02d", this.date.GetSecond()));
 
-		if (format.IndexOf("{moonRiseTime}") >= 0)
-			format = format.Replace("{moonRiseTime}", moonrise.ToShortTimeString());
-		if (format.IndexOf("{moonSetTime}") >= 0)
-			format = format.Replace("{moonSetTime}", moonset.ToShortTimeString());
-		if (format.IndexOf("{moonRasiName}") >= 0)
-			format = format.Replace("{moonRasiName}", GCRasi.GetName(astrodata.sunRise.RasiOfMoon));
-		if (format.IndexOf("{moonRasiNameEn}") >= 0)
-			format = format.Replace("{moonRasiNameEn}", GCRasi.GetNameEn(astrodata.sunRise.RasiOfMoon));
+		if (format.indexOf("{masaName}") >= 0)
+			format = format.replace("{masaName}", GCMasa.GetName(this.astrodata.Masa));
+		if (format.indexOf("{gaurabdaYear}") >= 0)
+			format = format.replace("{gaurabdaYear}", this.astrodata.GaurabdaYear.toString());
+		if (format.indexOf("{tithiName}") >= 0)
+			format = format.replace("{tithiName}", GCTithi.GetName(this.astrodata.sunRise.Tithi));
+		if (format.indexOf("{prevTithiName}") >= 0)
+			format = format.replace("{prevTithiName}", GCTithi.GetName((this.astrodata.sunRise.Tithi + 29) % 30));
+		if (format.indexOf("{nextTithiName}") >= 0)
+			format = format.replace("{nextTithiName}", GCTithi.GetName((this.astrodata.sunRise.Tithi + 1) % 30));
+		if (format.indexOf("{paksaName}") >= 0)
+			format = format.replace("{paksaName}", GCPaksa.GetName(this.astrodata.sunRise.Paksa));
+		if (format.indexOf("{yogaName}") >= 0)
+			format = format.replace("{yogaName}", GCYoga.GetName(this.astrodata.sunRise.Yoga));
+		if (format.indexOf("{naksatraName}") >= 0)
+			format = format.replace("{naksatraName}", GCNaksatra.GetName(this.astrodata.sunRise.Naksatra));
+		if (format.indexOf("{naksatraElapse}") >= 0)
+			format = format.replace("{naksatraElapse}", sprintf("%.1f %%", this.astrodata.sunRise.NaksatraElapse));
+		if (format.indexOf("{naksatraPada}") >= 0)
+			format = format.replace("{naksatraPada}", GCNaksatra.GetPadaText(this.astrodata.sunRise.NaksatraPada));
+
+		if (format.indexOf("{sankranti.day}") >= 0)
+			format = format.replace("{sankranti.day}", this.sankranti_day.day.toString());
+		if (format.indexOf("{sankranti.month}") >= 0)
+			format = format.replace("{sankranti.month}", this.sankranti_day.month.toString());
+		if (format.indexOf("{sankranti.monthAbr}") >= 0)
+			format = format.replace("{sankranti.monthAbr}", GregorianDateTime.GetMonthName(this.sankranti_day.month));
+		if (format.indexOf("{sankranti.monthName}") >= 0)
+			format = format.replace("{sankranti.monthName}", GregorianDateTime.GetMonthName(this.sankranti_day.month));
+		if (format.indexOf("{sankranti.hour}") >= 0)
+			format = format.replace("{sankranti.hour}", sprintf("%02d", this.sankranti_day.GetHour()));
+		if (format.indexOf("{sankranti.min}") >= 0)
+			format = format.replace("{sankranti.min}", sprintf("%02d", this.sankranti_day.GetMinute()));
+		if (format.indexOf("{sankranti.minRound}") >= 0)
+			format = format.replace("{sankranti.minRound}", sprintf("%02d", this.sankranti_day.GetMinuteRound()));
+		if (format.indexOf("{sankranti.sec}") >= 0)
+			format = format.replace("{sankranti.sec}", sprintf("%02d", this.sankranti_day.GetSecond()));
+		if (format.indexOf("{sankranti.rasiNameEn}") >= 0)
+			format = format.replace("{sankranti.rasiNameEn}", GCRasi.GetNameEn(this.sankranti_zodiac));
+		if (format.indexOf("{sankranti.rasiName}") >= 0)
+			format = format.replace("{sankranti.rasiName}", GCRasi.GetName(this.sankranti_zodiac));
+
+		if (format.indexOf("{dstSig}") >= 0)
+			format = format.replace("{dstSig}", GCStrings.GetDSTSignature(this.BiasMinutes));
+
+		if (format.indexOf("{moonRiseTime}") >= 0)
+			format = format.replace("{moonRiseTime}", this.moonrise.ToShortTimeString());
+		if (format.indexOf("{moonSetTime}") >= 0)
+			format = format.replace("{moonSetTime}", this.moonset.ToShortTimeString());
+		if (format.indexOf("{moonRasiName}") >= 0)
+			format = format.replace("{moonRasiName}", GCRasi.GetName(this.astrodata.sunRise.RasiOfMoon));
+		if (format.indexOf("{moonRasiNameEn}") >= 0)
+			format = format.replace("{moonRasiNameEn}", GCRasi.GetNameEn(this.astrodata.sunRise.RasiOfMoon));
 
 		if (args == null || args.Length == 0)
-			return format.ToString();
+			return format.toString();
 		else
-			return GCStrings.Format(format.ToString(), args);
+			return GCStrings.Format(format.toString(), args);
 	}
 
 	GetFullTithiName()
 	{
-		var str = GCTithi.GetName(astrodata.sunRise.Tithi);
+		var str = GCTithi.GetName(this.astrodata.sunRise.Tithi);
 
 		if (this.HasExtraFastingNote())
 		{
-			str = GCStrings.Format("{0} {1}", str, GetExtraFastingNote());
+			str = GCStrings.Format("{0} {1}", str, this.GetExtraFastingNote());
 		}
 
 		return str;
+	}
+
+	get ekadasi_parana() {
+		return this.eparana_time1 != null;
 	}
 
 	HasExtraFastingNote()
@@ -912,10 +952,10 @@ class VAISNAVADAY
 		return "";
 	}
 
-}
-
-function VAISNAVAEVENTComparer_Compare(x, y) {
-	return x.prio - y.prio
+	SortDayEvents()
+	{
+		this.dayEvents.sort(function(a, b){return a.prio - b.prio});
+	}
 }
 
 

@@ -51,13 +51,13 @@
                   {
                       t.Set(d);
                       t.PreviousDay();
-                      if (mlist.arr.Count <= current)
+                      if (mlist.arr.length <= current)
                           mlist.arr.push(new TResultMasa());
                       mlist.arr[current].vc_end = new GregorianDateTime(t);
                       current++;
                   }
                   lm = day.Masa;
-                  if (mlist.arr.Count <= current)
+                  if (mlist.arr.length <= current)
                       mlist.arr.push(new TResultMasa());
                   mlist.arr[current].masa = day.Masa;
                   mlist.arr[current].year = day.GaurabdaYear;

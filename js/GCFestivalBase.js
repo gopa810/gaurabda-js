@@ -17,7 +17,7 @@ class GCFestivalBase
 
   static StringToInt(s,defaultValue)
   {
-    if (s == null || s.length = 0) {
+    if (s == null || s.length == 0) {
       return defaultValue
     }
     return parseInt(s);
@@ -39,9 +39,9 @@ class GCFestivalTithiMasa {
   // while in second cas yesterday is tithi before given tithi and masa
   static TestFestival(days, index, fb, stickToMasa)
   {
-      var yesterday = days[index - fb.DayOffset - 1];
-      var today = days[index - fb.DayOffset];
-      var tomorrow = days[index - fb.DayOffset + 1];
+      var yesterday = days[index - fb.dayoff - 1];
+      var today = days[index - fb.dayoff];
+      var tomorrow = days[index - fb.dayoff + 1];
 
       if (today.astrodata.Masa == fb.masa && today.astrodata.sunRise.Tithi == fb.tithi)
       {
@@ -58,7 +58,7 @@ class GCFestivalTithiMasa {
               return true;
           }
       }
-      else
+      else if (yesterday != undefined)
       {
           if (yesterday.ksayaMasa == fb.masa && yesterday.ksayaTithi == fb.tithi)
           {
@@ -71,12 +71,12 @@ class GCFestivalTithiMasa {
 
   static IsFestivalDay(days, index, fb)
   {
-      return TestFestival(days, index, fb, false);
+      return GCFestivalTithiMasa.TestFestival(days, index, fb, false);
   }
 }
 
 class GCFestivalMasaDay {
-  IsFestivalDay(days,idx,fb)
+  static IsFestivalDay(days,idx,fb)
   {
       return GCFestivalTithiMasa.TestFestival(days,idx,fb,true);
   }
@@ -84,9 +84,9 @@ class GCFestivalMasaDay {
 
 
 class GCFestivalEkadasi {
-  IsFestivalDay(days,idx,fb)
+  static IsFestivalDay(days,idx,fb)
   {
-      var testDay = days[idx-fb.DayOffset];
+      var testDay = days[idx-fb.dayoff];
 
       return (testDay.astrodata.Masa == fb.masa
           && testDay.astrodata.sunRise.Paksa == fb.paksa
@@ -98,9 +98,9 @@ class GCFestivalEkadasi {
 
 
 class GCFestivalSankranti {
-  IsFestivalDay(days,idx,fb)
+  static IsFestivalDay(days,idx,fb)
   {
-      return (days[idx-fb.DayOffset].sankranti_zodiac == fb.sankranti);
+      return (days[idx-fb.dayoff].sankranti_zodiac == fb.sankranti);
   }
 }
 
@@ -108,7 +108,7 @@ class GCFestivalSpecial {
 
   static IsFestivalDay(days,idx,fb)
   {
-      var t = days[idx-fb.DayOffset];
+      var t = days[idx-fb.dayoff];
 
       if (fb.masa1 <= fb.masa2)
       {
@@ -121,6 +121,6 @@ class GCFestivalSpecial {
               return false;
       }
 
-      return fb.script(days,idx);
+      return fb.script(days, idx);
   }
 }

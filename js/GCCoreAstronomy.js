@@ -52,24 +52,36 @@ class GCCoreAstronomy
 		return moon.elevation;
 	}
 
+	static GetCoreEventsMonth(loc, year, month)
+	{
+		var key = "ceb_" + year.toString() + "_" + month.toString();
+
+		// if existing in memory, return it
+		if (key in AstronomySystem_CoreEventsMap)
+			return AstronomySystem_CoreEventsMap[key];
+
+		var ce = new TResultCoreEvents();
+		ce.Full = true;
+		// at last, we have to calculate it
+		ce.CalculateEvents(loc, year, month);
+		AstronomySystem_CoreEventsMap[key] = ce;
+
+		return ce;
+	}
+
 	static GetCoreEventsYear(loc, year)
 	{
 		var key = "ceb_" + year.toString() 
 
 		// if existing in memory, return it
-		if (AstronomySystem_CoreEventsMap.ContainsKey(key))
+		if (key in AstronomySystem_CoreEventsMap)
 			return AstronomySystem_CoreEventsMap[key];
-
-		var filePath = localStorage.getItem(key);
-		if (filePath != null)
-			return filePath
 
 		var ce = new TResultCoreEvents();
 		ce.Full = true;
 		// at last, we have to calculate it
 		ce.CalculateEvents(loc, year);
-		ce.SaveFile(filePath);
-		window.localStorage.setItem(key, ce);
+		AstronomySystem_CoreEventsMap[key] = ce;
 
 		return ce;
 	}

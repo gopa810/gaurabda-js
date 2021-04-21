@@ -166,8 +166,12 @@ var gEvents = [
 				var d1 = days[idx];
 				var d2 = days[idx+1];
 				var d3 = days[idx+2];
+				//console.log('Rama navami func idx:', idx, days[idx-1].ksayaTithi, d0.astro.tithi)
 				if (d0.ksayaTithi == 23) return 1;
 				if (d0.astro.tithi == 23) return 0;
+				/*console.log('d1 tithi=', d1.astro.tithi, d1.date);
+				console.log('d2 tithi=', d2.astro.tithi, d2.date);
+				console.log('d3 fasttype=', d3);*/
 				if ((d2.astro.tithi == 23) && (d3.fastType > 0)) return 1;
 				if ((d1.astro.tithi == 23) && (d2.fastType == 0)) return 1;
 				return 0;

@@ -667,14 +667,9 @@ class GCStrings {
 
 	static GetFastingName(fastingID)
 	{
-		foreach (ft in FastType.Fasts)
-		{
-			if (ft.FastID == fastingID)
-			{
-				return GCStrings.Format("({0})", Localized(ft.FastText));
-			}
+		if (fastingID in FastTypeText) {
+			return FastTypeText[fastingID];
 		}
-
 		return "";
 	}
 
@@ -688,7 +683,7 @@ class GCStrings {
 
 	static GetDSTSignature(nDST)
 	{
-		return (nDST != 0) ? Localized("DST") : Localized("LT");
+		return (nDST != 0) ? GCStrings.Localized("DST") : GCStrings.Localized("LT");
 	}
 
 	static setString(i,str)
@@ -726,13 +721,13 @@ class GCStrings {
 		}
 	}
 
-	Format() {
-		if (arguments.length < 1)
-			return ""
-		s = arguments[0]
-		for(i = 0; i < arguments.length - 1; i++) {
-			s = s.replace("{" + i + "}", arguments[i+1])
-		}
-		return s
+	static Format(format) {
+		var args = Array.prototype.slice.call(arguments, 1);
+		return format.replace(/{(\d+)}/g, function(match, number) { 
+		  return typeof args[number] != 'undefined'
+			? args[number] 
+			: match
+		  ;
+		});
 	}
 }

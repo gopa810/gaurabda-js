@@ -23,9 +23,9 @@
 - GCTithi
 - GCYoga
 - LocationList
-CustomEventList
-GCGlobal
-GCCalendar
+- CustomEventList (events.js)
+- GCGlobal
+- GCCalendar
 TResultMasaList
 TResultCalendar
 TResultApp

@@ -17,8 +17,11 @@ function GregorianDateTime_Test() {
 
 
 class GregorianDateTime {
-	constructor() {
+	constructor(date) {
 		this.Clear()
+		if (date != undefined) {
+			this.Set(date);
+		}
 	}
   
 	Clear() {
@@ -41,6 +44,23 @@ class GregorianDateTime {
 		var dt = new GregorianDateTime()
 		dt.Set(this)
 		return dt
+	}
+	
+	static fromComponents(year, month, day) {
+		var d = new GregorianDateTime();
+		d.year = year;
+		d.month = month;
+		d.day = day;
+		return d;
+	}
+
+	static fromDate(date) {
+		return new GregorianDateTime(date);
+	}
+
+	setOffset(offset) {
+		this.TimezoneHours = offset;
+		return this;
 	}
 	
 	Set(gdt) {
@@ -71,16 +91,20 @@ class GregorianDateTime {
 		return LongTimeString()
 	}
   
+	get weekday() {
+		return this.dayOfWeek;
+	}
+	
 	getStringValue() {
 		return toString()
 	}
 
 	ShortTimeString() {
-		return this.Format("{hour}:{minRound}", this.GetHour(), this.GetMinute());
+		return sprintf("%02d:%02d", this.GetHour(), this.GetMinute());
 	}
 
 	LongTimeString() {
-		return this.Format("{hour}:{min}:{sec}", this.GetHour(), this.GetMinute(), this.GetSecond());
+		return sprintf("%02d:%02d:%02d", this.GetHour(), this.GetMinute(), this.GetSecond());
 	}
 	
 	c_str() {
@@ -189,13 +213,6 @@ class GregorianDateTime {
 		j = k1 + k2 + this.day + 59;
 		if (j > 2299160)
 			j -= k3;
-		/*console.log('Date', this.year, this.month, this.day)
-		console.log('   yy', yy)
-		console.log('   mm', mm)
-		console.log('   k1', k1)
-		console.log('   k2', k2)
-		console.log('   k3', k3)
-		console.log('    j', j)*/
 		return j;
 	}
 
@@ -268,10 +285,10 @@ class GregorianDateTime {
 	
 	AddDays(n) {
 		if (n < 0) {
-			SubtractDays(-n)
+			this.SubtractDays(-n)
 		} else {
 			for (i = 0; i < n; i++) {
-				NextDay();
+				this.NextDay();
 			}
 		}
 	}
@@ -313,10 +330,10 @@ class GregorianDateTime {
 
 	SubtractDays(n) {
 		if (n < 0) {
-			AddDays(-n)
+			this.AddDays(-n)
 		} else {
-			for (i = 0; i < n; i++) {
-				PreviousDay();
+			for (var i = 0; i < n; i++) {
+				this.PreviousDay();
 			}
 		}
 	}
@@ -342,7 +359,8 @@ class GregorianDateTime {
 	}
 
 	InitWeekDay() {
-		this.dayOfWeek = (GetJulianInteger() + 1)%7
+		this.dayOfWeek = (this.GetJulianInteger() + 1)%7
+		return this;
 	}
 	
 	

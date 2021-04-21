@@ -26,10 +26,10 @@ class GCLocation {
 
 
     get OffsetUtcHours() {
-      if (this.TimeZone() == null) {
+      if (this.TimeZone == null) {
         return 0.0;
       }
-      return this.TimeZone().OffsetMinutes / 60.0;
+      return this.TimeZone.OffsetMinutes / 60.0;
     }
 
     get TimeZone() {
@@ -76,9 +76,9 @@ class GCLocation {
 
     GetEarthData() {
         var e = new GCEarthData();
-        e.TimeZone = TimeZone;
-        e.latitudeDeg = Latitude;
-        e.longitudeDeg = Longitude;
+        e.TimeZone = this.TimeZone;
+        e.latitudeDeg = this.Latitude;
+        e.longitudeDeg = this.Longitude;
         return e;
     }
 

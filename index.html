@@ -35,6 +35,8 @@
 <script src="js/GCConjunction.js"></script>
 <script src="js/GCHourTime.js"></script>
 <script src="js/events.js"></script>
+<script src="js/GCFestivalBase.js"></script>
+<script src="js/GCFestivalSpecialExecutor.js"></script>
 <script src="js/TResultCalendar.js"></script>
 <script src="js/TResultToday.js"></script>
 <script src="js/TResultApp.js"></script>
@@ -95,7 +97,28 @@
     document.write('<p>GCTithi: ', GCTithi.GetName(tt), ', ', td.c_str());
     [yg, yd] = GCYoga.GetNextYogaStart(ed, d1);
     document.write('<p>GCYoga: ', GCYoga.GetName(yg), ' ', yd.c_str());
-
+    
+    
+    document.write('<h2>Calendar</h2>');
+    tc = new TResultCalendar();
+    tc.CalculateCalendar(loc, d1, 10);
+    document.write('Count: ', tc.m_PureCount);
+    for(var i=0; i<tc.m_PureCount; i++) {
+      var d2 = tc.m_pData[i+tc.BEFORE_DAYS];
+      document.write('<hr><h3>', d2.date.toString(), '</h3>')
+      document.write('<p>astro: ', d2.astrodata);
+	  	document.write('<p>core events ', d2.coreEvents.items().length);
+		  for(var ce of d2.coreEvents.items()) {
+			  document.write('<p>&nbsp;&nbsp;&nbsp;&nbsp;', ce);
+      }
+      if (d2.dayEvents.length > 0) {
+        document.write('<p>day events');
+        for(var de of d2.dayEvents) {
+          document.write('<p>&nbsp;&nbsp;&nbsp;&nbsp;', de);
+        }
+      }
+      document.write('<p>', d2.toString());
+    }
   </script>
 
 

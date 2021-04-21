@@ -25,6 +25,18 @@
 		    this.sunRise.toString(), this.sunNoon.toString(), this.sunSet.toString() );
 	}
 
+	get tithi() {
+		return this.sunRise.Tithi;
+	}
+
+	get naksatra() {
+		return this.sunRise.Naksatra;
+	}
+
+	get masa() {
+		return this.Masa;
+	}
+
 	/*public override GSCore GetPropertyValue(string Token)
 	{
 		GSCore result = null;
@@ -253,7 +265,7 @@
 		var ksaya_from = -1;
 		var ksaya_to = -1;
 
-		date.shour = sunRise.TotalDays;
+		date.shour = this.sunRise.TotalDays;
 
 		// STEP 1: calculate position of the sun and moon
 		// it is done by previous call of DayCalc

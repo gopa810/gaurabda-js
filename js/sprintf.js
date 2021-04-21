@@ -52,7 +52,7 @@ function sprintf_convert_value(a, arg) {
     res = v1 + v2;
   } else if (typ === 's') {
     digits = parseInt(numb, 10);
-    value = arg.toString();
+    value = arg == undefined ? "(undefined)" : arg.toString();
     if ((sign === null && digits>0) || sign==='+') {
       while (value.length < digits) {
         value += padding;

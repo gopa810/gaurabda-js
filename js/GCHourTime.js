@@ -229,7 +229,7 @@ class GCHourTime
 
 	AddMinutes(mn)
 	{
-		this.min += Convert.ToInt32(Math.Floor(mn));
+		this.min += Convert.ToInt32(Math.floor(mn));
 		while (this.min < 0) { this.min += 60; this.hour = this.hour - 1; }
 		while (this.min > 59) { this.min -= 60; this.hour = this.hour + 1; }
 	}
@@ -247,7 +247,7 @@ class GCHourTime
 
 	SetValue(i)
 	{
-		hour = min = sec = mili = i;
+		this.hour = this.min = this.sec = this.mili = i;
 	}
 
 	SetDayTime(d)

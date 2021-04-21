@@ -363,7 +363,7 @@
                 vcAdd.shour = 0.0;
                 while (vcAdd.IsBeforeThis(vcEnd))
                 {
-                    nData = GCMoonData.GetNextMoonRasi(earth, vcAdd, out vcNext);
+                    [nData, vcNext] = GCMoonData.GetNextMoonRasi(earth, vcAdd);
                     if (vcNext.GetDayInteger() < vcEnd.GetDayInteger())
                     {
                         vcNext.InitWeekDay();
@@ -382,7 +382,7 @@
             }
             if (gds.getValue(GCDS.COREEVENTS_CONJUNCTION) != 0)
             {
-                double dlong;
+                var dlong;
                 vcAdd.Set(vc);
                 vcAdd.shour = 0.0;
                 while (vcAdd.IsBeforeThis(vcEnd))
