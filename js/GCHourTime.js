@@ -11,6 +11,13 @@ class GCHourTime
 		this.Ayanamsa = 0.0
 	}
 
+	static fromObject(obj)
+	{
+		var hourtime = new GCHourTime();
+		hourtime.Set(obj);
+		return hourtime;
+	}
+
 	Set(rise)
 	{
 		// TODO: Complete member initialization
@@ -20,7 +27,7 @@ class GCHourTime
 		this.mili = rise.mili;
 		this.longitude = 0.0;
 		this.longitudeMoon = 0.0;
-		this.Ayanamsa = 0.0;
+		this.Ayanamsa = rise.Ayanamsa;
 	}
 
 	static Create(rise,p)

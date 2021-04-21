@@ -825,6 +825,16 @@ class VAISNAVADAY
 		return this.moonrise.TotalSeconds;
 	}
 
+	get midnightNaksatra()
+	{
+		var date = GregorianDateTime.fromDate(this.date);
+		var midnight = GCHourTime.fromObject(this.astrodata.sunNoon);
+		date.shour = this.astrodata.sunNoon.TotalDays;
+		date.AddHours(12);
+		midnight.longitudeMoon = GCCoreAstronomy.GetMoonLongitude(date, this.earth);
+		return midnight.Naksatra;
+	}
+
 	Format(format, args)
 	{
 		if (format.indexOf("{day}") >= 0)
