@@ -6,6 +6,9 @@
 	  font-family:Verdana;
 	  font-size:11pt;
   }
+  td {
+    vertical-align: top;
+  }
 	td.hed {
 	  font-family:Verdana;
 	  font-size:9pt;
@@ -21,13 +24,38 @@
   }
   .loclink {
     font-size:10pt;
-    color: #0000a0;
+    color:gray;
     cursor: pointer;
   }
   .loclink:hover {
     text-decoration:underline;
     color: #0000f0;
     cursor: pointer;
+  }
+  .datelinkbase {
+    font-size:10pt;
+    color: gray;
+  }
+  .datelink {
+    font-size:10pt;
+    color: lightgray;
+    cursor: pointer;
+  }
+  .datelink:hover {
+    text-decoration:underline;
+    color: blue;
+    cursor: pointer;
+  }
+  .core-events {
+    padding:0pt;
+    margin: 0 0 0 0;
+    font-size: 9pt;
+  }
+  .clickable_tithi_name {
+    cursor: pointer;
+  }
+  .clickable_tithi_name:hover {
+    color:green;
   }
   </style>
 </head>
@@ -77,6 +105,16 @@
 
 <script>
 
+var d1 = new GregorianDateTime();
+
+console.log(location);
+const urlParams = new URLSearchParams(location.search);
+for (const [key, value] of urlParams) {
+  if (key=='date') {
+    d1 = GregorianDateTime.fromTriplet(value);
+  }
+}
+
 //GCDisplaySettings.Reset()
 var loc = null;
 var loctext = window.localStorage.getItem('location');
@@ -93,14 +131,16 @@ if (loctext != null && loctext != undefined) {
   <div id='calendarText'></div>
 
   <div id='selectLoc'>
+    <h1>Find location</h1>
+    <p>Type part of location name into text field and select location from list
+       below. Search is case insensitive. You can type part of city name or 
+       part of country name.</p>
     <input type=text size=40 id='userloc' onkeyup="findLoc('userloc', 'locations')">
     <button type='button' onclick="findLoc('userloc', 'locations')">Search</button>
     <div id='locations'></div>
   </div>
   
   <script>
-    var d1 = new GregorianDateTime();
-
     function calcCalendar(d1) {
       //document.write('<h2>Calendar</h2>');
       tc = new TResultCalendar();
@@ -130,6 +170,11 @@ if (loctext != null && loctext != undefined) {
 
     calcCalendar(d1);
     setTab('cal');
+
+    function setStartDate(dateTriplet) {
+      d1 = GregorianDateTime.fromTriplet(dateTriplet);
+      calcCalendar(d1);
+    }
 
     function setLoc(locEnc) {
       window.localStorage.setItem('location', locEnc);

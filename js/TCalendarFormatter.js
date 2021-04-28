@@ -11,6 +11,11 @@ function getDayBkgColorCode(/*VAISNAVADAY */ p)
 	return "";
 }
 
+function getDateRangeText(d1, d2) {
+	return sprintf(" %s %d - %s %d ", 
+		GregorianDateTime.GetMonthAbreviation(d1.month), d1.day,
+		GregorianDateTime.GetMonthAbreviation(d2.month), d2.day);
+}
 /******************************************************************************************/
 /*                                                                                        */
 /******************************************************************************************/
@@ -27,6 +32,14 @@ function writeCalendarHtml(daybuff)
 	var curCell = null;
 	var main = document.createElement('div');
 	var pp, sp;
+
+	var thisStart = daybuff.GetDay(0).date;
+	var dates = [ thisStart.cloneDays(-daybuff.m_vcCount),
+				  thisStart.cloneDays(-1),
+				  thisStart,
+				  thisStart.cloneDays(daybuff.m_vcCount - 1),
+				  thisStart.cloneDays(daybuff.m_vcCount),
+				  thisStart.cloneDays(2*daybuff.m_vcCount - 1)];
 
 	for (k = 0; k < daybuff.m_vcCount; k++)
 	{
@@ -66,7 +79,33 @@ function writeCalendarHtml(daybuff)
 					setTab('loc');
 				};
 				pp.appendChild(sp);
+				pp.appendChild(document.createElement('br'));
 
+				/* link to prev date range */
+				sp = document.createElement('span');
+				sp.className = 'datelink';
+				sp.onclick = function() {
+					setStartDate(this.getAttribute('data_start'));
+				}
+				sp.setAttribute('data_start', dates[0].triplet);
+				sp.innerText = sprintf(" %s %s ", getDateRangeText(dates[0], dates[1]), String.fromCharCode(10096));
+				pp.appendChild(sp);
+				/* info about current date range */
+				sp = document.createElement('span');
+				sp.className = 'datelinkbase';
+				sp.innerText = getDateRangeText(dates[2], dates[3]);
+				pp.appendChild(sp);
+				/* link to next date range */
+				sp = document.createElement('span');
+				sp.className = 'datelink';
+				sp.onclick = function() {
+					setStartDate(this.getAttribute('data_start'));
+				}
+				sp.setAttribute('data_start', dates[4].triplet);
+				sp.innerText = sprintf(" %s %s ", String.fromCharCode(10097), getDateRangeText(dates[4], dates[5]));
+				pp.appendChild(sp);
+
+				/* calendar days are in the table  */
 				curTable = document.createElement('table');
 				curTable.align = 'center';
 				main.appendChild(curTable);
@@ -123,7 +162,35 @@ function writeCalendarHtml(daybuff)
 			curRow.appendChild(curCell);
 
 			curCell = document.createElement('td');
-			curCell.innerText = pvd.GetFullTithiName();
+			curCell.setAttribute('data_dets', 'd' + k.toString());
+			curCell.onclick = function() {
+				var a = this.getAttribute('data_dets');
+				var el1 = document.getElementById(a);
+				if (el1.style.display == 'none') {
+					el1.style.display = 'block';
+				} else {
+					el1.style.display = 'none';
+				}
+			}
+			//curCell.innerText = pvd.GetFullTithiName();
+			sp = document.createElement('span');
+			sp.className = 'clickable_tithi_name';
+			sp.innerText = pvd.GetFullTithiName();
+			curCell.appendChild(sp);
+			pp = document.createElement('div');
+			pp.style.paddingLeft = 20;
+			pp.style.marginTop = 16;
+			pp.style.marginBottom = 16;
+			pp.style.display = 'none';
+			pp.id = 'd' + k.toString();
+			curCell.appendChild(pp);
+			for (var ce of pvd.coreEvents.items())
+			{
+				sp = document.createElement('p');
+				sp.className = 'core-events';
+				sp.innerText = sprintf("%s %s", ce.TypeString(), ce.getTimeString(pvd.UtcDayStart));
+				pp.appendChild(sp);
+			}
 			curRow.appendChild(curCell);
 
 			curCell = document.createElement('td');

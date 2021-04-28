@@ -1,20 +1,27 @@
+import codecs
 import re
 
+#
+# Utility for joining all Javascript into single file
+#
+
 text = ''
-with open('calendar.html', 'rt') as cf:
+with open('calendar.html', 'rt', encoding='utf-8') as cf:
     text = cf.read()
+    text = text.strip()
 
 regex = r'<script src=[\"\']([a-zA-z/\.]+)[\"\']><\/script>'
 files = [tup for tup in re.findall(regex, text)]
 
-with open('gcal.js', 'wt') as outf:
+with open('release/gcal.js', 'wb') as outf:
     for filename in files:
-        t = ''
-        with open(filename, 'rt') as inf:
+        t = b''
+        with open(filename, 'rb') as inf:
             t = inf.read()
-        print('/***********************************************', file=outf)
-        print('**    ', filename, file=outf)
-        print(' **********************************************/', file=outf)
-        print('', file=outf)
-        print(t, file=outf)
-        print('', file=outf)
+        outf.write(b'/***********************************************')
+        outf.write(('**    ' + filename).encode('utf-8'))
+        outf.write(b' **********************************************/')
+        outf.write(b'\r\n')
+        t = t.replace(codecs.BOM_UTF8, b'')
+        outf.write(t)
+        outf.write(b'\r\n')

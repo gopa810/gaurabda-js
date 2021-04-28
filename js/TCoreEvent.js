@@ -37,7 +37,7 @@ class TCoreEvent {
 
 	// long utcDayStart
 	DaySeconds(utcDayStart) {
-		return Convert.ToInt32((Time - utcDayStart + 86400) % 86400);
+		return Convert.ToInt32((this.Time - utcDayStart + 86400) % 86400);
 	}
 
 	/*public override GSCore GetPropertyValue(string s)
@@ -71,6 +71,13 @@ class TCoreEvent {
 
 	toString() {
 		return this.TypeString() + ' ' + this.Time;
+	}
+
+	getTimeString(utcDayStart) {
+		var ds = this.DaySeconds(utcDayStart);
+		var ht = new DAYTIME();
+		ht.SetDayTime(ds/86400.0 + this.nDst/24.0);
+		return ht.ToLongTimeString();
 	}
 
 	static GetTypeString(nType, nData) {

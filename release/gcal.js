@@ -1,7 +1,4 @@
-/***********************************************
-**     js/sprintf.js
- **********************************************/
-
+/*************************************************    js/sprintf.js **********************************************/
 
 function sprintf_convert_value(a, arg) {
   var res = ''
@@ -115,11 +112,7 @@ function sprintf(fmt, ...args) {
   return res;
 }
 
-
-/***********************************************
-**     js/System.js
- **********************************************/
-
+/*************************************************    js/System.js **********************************************/
 function ImportScript(url) {
     var script = document.createElement("script"); // Make a script DOM node
     script.src = url; // Set it's src to the provided URL
@@ -127,11 +120,7 @@ function ImportScript(url) {
     document.head.appendChild(script); // Add it to the end of the head section of the page (could change 'head' to 'body' to add it to the end of the body section instead)
 }
 
-
-/***********************************************
-**     js/Enums.js
- **********************************************/
-
+/*************************************************    js/Enums.js **********************************************/
 
 let MahadvadasiType = {
 	EV_NULL : 0x100,
@@ -385,11 +374,7 @@ let GCLayoutData = {
 }
 
 
-
-/***********************************************
-**     js/GCMath.js
- **********************************************/
-
+/*************************************************    js/GCMath.js **********************************************/
 class Convert {
 	static ToInt32(a) {
 		return parseInt(a,10)
@@ -406,21 +391,11 @@ class Convert {
 	}
 
 	static FormatD2(a) {
-		if (a < 10)
-			return "0" + a.toString()
-		else
-			return a.toString()
+		return sprintf("%02d", a);
 	}
 
 	static FormatD4(a) {
-		if (a < 10)
-			return "000" + a.toString()
-		else if (a < 100)
-			return "00" + a.toString()
-		else if (a < 1000)
-			return "0" + a.toString()
-		else
-			return a.toString()
+		return sprintf("%04d", a);
 	}
 
 }
@@ -668,11 +643,7 @@ class GCMath {
 
 
 
-
-/***********************************************
-**     js/GCDayHours.js
- **********************************************/
-
+/*************************************************    js/GCDayHours.js **********************************************/
 
 class DAYTIME {
 
@@ -692,17 +663,17 @@ class DAYTIME {
         this.hour = parseInt( Math.floor(time_hr) );
     
         // minute
-        time_hr -= hour;
+        time_hr -= this.hour;
         time_hr *= 60;
         this.min = parseInt( Math.floor(time_hr) );
     
         // second
-        time_hr -= min;
+        time_hr -= this.min;
         time_hr *= 60;
         this.sec = parseInt( Math.floor(time_hr) );
     
         // miliseconds
-        time_hr -= sec;
+        time_hr -= this.sec;
         time_hr *= 1000;
         this.mili = parseInt( Math.floor(time_hr) );
     }
@@ -805,11 +776,7 @@ class DAYTIME {
     } 
 }
 
-
-/***********************************************
-**     js/GCAyanamsha.js
- **********************************************/
-
+/*************************************************    js/GCAyanamsha.js **********************************************/
 
 var GCAyanamsha_pNames = [
 	"Fagan/Bradley",
@@ -952,11 +919,7 @@ class GCAyanamsha
 
 }
 
-
-/***********************************************
-**     js/GCRasi.js
- **********************************************/
-
+/*************************************************    js/GCRasi.js **********************************************/
 
 var GCRasi_Name = [
 	"Mesa", 
@@ -1015,11 +978,7 @@ class GCRasi {
 	}
 }
 
-
-/***********************************************
-**     js/TCountry.js
- **********************************************/
-
+/*************************************************    js/TCountry.js **********************************************/
 var TCountry_modified = false;
 var TCountry_gcontinents = [
     "",
@@ -1360,11 +1319,7 @@ for (var c of TCountry_gcountries) {
 }
 
 
-
-/***********************************************
-**     js/GregorianDateTime.js
- **********************************************/
-
+/*************************************************    js/GregorianDateTime.js **********************************************/
 
 var GregorianDateTime_Months = [0,31,28,31,30,31,30,31,31,30,31,30,31]
 var GregorianDateTime_MonthsOvr = [0,31,29,31,30,31,30,31,31,30,31,30,31]
@@ -1413,11 +1368,31 @@ class GregorianDateTime {
 		return dt
 	}
 	
+	get triplet() {
+		return sprintf('%04d-%02d-%02d', this.year, this.month, this.day);
+	}
+
+	static fromTriplet(str) {
+		var parts = str.split('-');
+		if (parts.length == 3) {
+			return GregorianDateTime.fromComponents(parseInt(parts[0], 10),
+				parseInt(parts[1], 10), parseInt(parts[2], 10));
+		}
+		return GregorianDateTime();
+	}
+
 	static fromComponents(year, month, day) {
 		var d = new GregorianDateTime();
 		d.year = year;
 		d.month = month;
 		d.day = day;
+		return d;
+	}
+
+	cloneDays(daysOffset) {
+		var d = new GregorianDateTime();
+		d.Set(this);
+		d.AddDays(daysOffset);
 		return d;
 	}
 
@@ -1439,6 +1414,7 @@ class GregorianDateTime {
 			this.dayOfWeek = gdt.dayOfWeek
 			this.TimezoneHours = gdt.TimezoneHours
 		}
+		return this;
 	}
 	
 	SetDate(nYear,nMonth,nDay) {
@@ -1633,6 +1609,7 @@ class GregorianDateTime {
 			this.day = GregorianDateTime.GetMonthMaxDays(this.year, this.month);
 		}
 		this.dayOfWeek = (this.dayOfWeek + 6) % 7;
+		return this;
 	}
 
 	NextDay() {
@@ -1648,16 +1625,18 @@ class GregorianDateTime {
 			this.day = 1;
 		}
 		this.dayOfWeek = (this.dayOfWeek + 1) % 7;
+		return this;
 	}
 	
 	AddDays(n) {
 		if (n < 0) {
-			this.SubtractDays(-n)
+			return this.SubtractDays(-n)
 		} else {
-			for (i = 0; i < n; i++) {
+			for (var i = 0; i < n; i++) {
 				this.NextDay();
 			}
 		}
+		return this;
 	}
 
 	// julianUtcDate (double)
@@ -1703,6 +1682,7 @@ class GregorianDateTime {
 				this.PreviousDay();
 			}
 		}
+		return this;
 	}
 	
 	AddHours(ndst) {
@@ -1932,11 +1912,7 @@ class GregorianDateTime {
 
 
 
-
-/***********************************************
-**     js/GCPaksa.js
- **********************************************/
-
+/*************************************************    js/GCPaksa.js **********************************************/
 
 /**************************************************
 *
@@ -1955,11 +1931,7 @@ class GCPaksa {
 	}
 
 }
-
-/***********************************************
-**     js/GaurabdaDate.js
- **********************************************/
-
+/*************************************************    js/GaurabdaDate.js **********************************************/
 
 class GaurabdaDate {
 
@@ -2019,11 +1991,7 @@ class GaurabdaDate {
 
 }
 
-
-/***********************************************
-**     js/TCoreEvent.js
- **********************************************/
-
+/*************************************************    js/TCoreEvent.js **********************************************/
 
 
 
@@ -2063,7 +2031,7 @@ class TCoreEvent {
 
 	// long utcDayStart
 	DaySeconds(utcDayStart) {
-		return Convert.ToInt32((Time - utcDayStart + 86400) % 86400);
+		return Convert.ToInt32((this.Time - utcDayStart + 86400) % 86400);
 	}
 
 	/*public override GSCore GetPropertyValue(string s)
@@ -2097,6 +2065,13 @@ class TCoreEvent {
 
 	toString() {
 		return this.TypeString() + ' ' + this.Time;
+	}
+
+	getTimeString(utcDayStart) {
+		var ds = this.DaySeconds(utcDayStart);
+		var ht = new DAYTIME();
+		ht.SetDayTime(ds/86400.0 + this.nDst/24.0);
+		return ht.ToLongTimeString();
 	}
 
 	static GetTypeString(nType, nData) {
@@ -2210,11 +2185,7 @@ class TCoreEvent {
 
 }
 
-
-/***********************************************
-**     js/GCEkadasi.js
- **********************************************/
-
+/*************************************************    js/GCEkadasi.js **********************************************/
 
 let GCEkadasi_Name = [
 	"Varuthini Ekadasi",
@@ -2298,11 +2269,7 @@ class GCEkadasi
 	}
 }
 
-
-/***********************************************
-**     js/GCEarthData.js
- **********************************************/
-
+/*************************************************    js/GCEarthData.js **********************************************/
 class GCHorizontalCoords
 {
 	construct() {
@@ -2761,11 +2728,7 @@ class GCEarthData
 
 }
 
-
-/***********************************************
-**     js/GCStrings.js
- **********************************************/
-
+/*************************************************    js/GCStrings.js **********************************************/
 let GCStrings_childsylable = [
 		    "chu", "che", "cho", "la", //asvini
 		    "li", "lu", "le", "lo", // bharani
@@ -3503,11 +3466,7 @@ class GCStrings {
 	}
 }
 
-
-/***********************************************
-**     js/TTimeZone.js
- **********************************************/
-
+/*************************************************    js/TTimeZone.js **********************************************/
 
 
 var TimeZoneList = []
@@ -4278,12 +4237,8 @@ TimeZoneList = [
 	["Pacific/Kiritimati", 840, 0, 0, 0, 0, 0, 0, 0, 0, 0, 203]
 ];
 
-
-/***********************************************
-**     js/GCLocation.js
- **********************************************/
-
-﻿var GCLocation_List = [];
+/*************************************************    js/GCLocation.js **********************************************/
+var GCLocation_List = [];
 var GCLocation_Default = null;
 
 class GCLocation {
@@ -6842,11 +6797,7 @@ GCLocation_List = [
 ["Vrindavan", "India", 77.701241, 27.577990, 5.50, 188],
 ["Mayapur", "India", 88.388077, 23.423412, 5.50, 188 ]
 ]
-
-/***********************************************
-**     js/GCSunData.js
- **********************************************/
-
+/*************************************************    js/GCSunData.js **********************************************/
 
 
 let sun_long = [
@@ -7342,11 +7293,7 @@ class GCSunData {
 
 }
 
-
-/***********************************************
-**     js/GCMoonData.js
- **********************************************/
-
+/*************************************************    js/GCMoonData.js **********************************************/
 class GCMoonData {
 
 	constructor() {
@@ -7864,11 +7811,7 @@ let  GCMoonData_sigma_b = [
 		132,		   -119,			115,			107
 	];
 
-
-/***********************************************
-**     js/GCSankranti.js
- **********************************************/
-
+/*************************************************    js/GCSankranti.js **********************************************/
 let sankrantiDetermineType = 2;
 
 let GCSankranti_snam = [
@@ -7950,12 +7893,8 @@ class GCSankranti {
 	}
 }
 
-
-/***********************************************
-**     js/GCCoreAstronomy.js
- **********************************************/
-
-﻿let AstronomySystem = { Meeus: 1 }
+/*************************************************    js/GCCoreAstronomy.js **********************************************/
+let AstronomySystem = { Meeus: 1 }
 
 let AstronomySystem_System = 1
 let AstronomySystem_Topocentric = false
@@ -8044,12 +7983,8 @@ class GCCoreAstronomy
 	}
 }
 
-
-/***********************************************
-**     js/GCCalendar.js
- **********************************************/
-
-﻿let PeriodUnit = {
+/*************************************************    js/GCCalendar.js **********************************************/
+let PeriodUnit = {
 		Days : 1,
 		Weeks : 2,
 		Months : 3,
@@ -8248,11 +8183,7 @@ class GCCalendar {
 	}
 }
 
-
-/***********************************************
-**     js/Vaisnavaday.js
- **********************************************/
-
+/*************************************************    js/Vaisnavaday.js **********************************************/
 class VAISNAVAEVENT
 {
 	constructor() {
@@ -9224,12 +9155,8 @@ class VAISNAVADAY
 
 
 
-
-/***********************************************
-**     js/GCMasa.js
- **********************************************/
-
-﻿let GCMasa_masaName = [
+/*************************************************    js/GCMasa.js **********************************************/
+let GCMasa_masaName = [
 	"Madhusudana", 
 	"Trivikrama", 
 	"Vamana", 
@@ -9331,12 +9258,8 @@ class GCMasa
 }
 
 
-
-/***********************************************
-**     js/GCTithi.js
- **********************************************/
-
-﻿let GCTithi_tithiName = [
+/*************************************************    js/GCTithi.js **********************************************/
+let GCTithi_tithiName = [
 	"Pratipat",
 	"Dvitiya",
 	"Tritiya",
@@ -9932,12 +9855,8 @@ class GCTithi
 	}
 }
 
-
-/***********************************************
-**     js/GCAstroData.js
- **********************************************/
-
-﻿class GCAstroData {
+/*************************************************    js/GCAstroData.js **********************************************/
+class GCAstroData {
 
 	constructor() {
 		// date of Julian epoch
@@ -10655,12 +10574,8 @@ let gGaurBeg = [
 	2106516, 2106532, 2106547, 2106563, 2106577, 2106594, 2106609, 2106625, 2106639, 2106654, 2106669, 2106685, 2106701, 2106716,
 	2106732, 2106747, 2106763, 2106778, 2107434, 2107449, 2107465, 2107479, 2106485, 2106500, 0, 0
 ]
-
-/***********************************************
-**     js/GCNaksatra.js
- **********************************************/
-
-﻿let GCNaksatra_naksatraName = [
+/*************************************************    js/GCNaksatra.js **********************************************/
+let GCNaksatra_naksatraName = [
 	"Asvini",
 	"Bharani",
 	"Krittika",
@@ -10837,12 +10752,8 @@ class GCNaksatra {
 	}
 }
 
-
-/***********************************************
-**     js/GCYoga.js
- **********************************************/
-
-﻿class GCYoga {
+/*************************************************    js/GCYoga.js **********************************************/
+class GCYoga {
 	static GetNextYogaStart(ed, startDate)
 	{
 		var phi = 40.0/3.0;
@@ -10935,12 +10846,8 @@ let GCYoga_yogaName = [
 	"Vaidhriti" 
 ]
 
-
-/***********************************************
-**     js/GCDisplaySettings.js
- **********************************************/
-
-﻿let GCDS = {
+/*************************************************    js/GCDisplaySettings.js **********************************************/
+let GCDS = {
 	"DISP_ALWAYS": -1,
 	"CAL_ARUN_TIME": 1,
 	"CAL_ARUN_TITHI": 0,
@@ -11470,12 +11377,8 @@ class GCDisplaySettings {
 
 let gds = new GCDisplaySettings();
 
-
-/***********************************************
-**     js/GCConjunction.js
- **********************************************/
-
-﻿class GCConjunction {
+/*************************************************    js/GCConjunction.js **********************************************/
+class GCConjunction {
 
 	/*********************************************************************/
 	/*                                                                   */
@@ -11851,11 +11754,7 @@ let gds = new GCDisplaySettings();
 
 }
 
-
-/***********************************************
-**     js/GCHourTime.js
- **********************************************/
-
+/*************************************************    js/GCHourTime.js **********************************************/
 class GCHourTime
 {
 	constructor() {
@@ -12190,11 +12089,7 @@ class GCHourTime
 
 }
 
-
-/***********************************************
-**     js/events.js
- **********************************************/
-
+/*************************************************    js/events.js **********************************************/
 var gEventsVisible = {
 	"0": true,
 	"1": true,
@@ -14429,11 +14324,7 @@ var gEvents = [
 	]},
 ];
 
-
-/***********************************************
-**     js/GCFestivalBase.js
- **********************************************/
-
+/*************************************************    js/GCFestivalBase.js **********************************************/
 
 var globalEventId = 1;
 
@@ -14561,21 +14452,13 @@ class GCFestivalSpecial {
   }
 }
 
-
-/***********************************************
-**     js/GCFestivalSpecialExecutor.js
- **********************************************/
-
+/*************************************************    js/GCFestivalSpecialExecutor.js **********************************************/
 class GCFestivalSpecialExecutor {
     constructor() {
         this.calendar = null;
     }
 }
-
-/***********************************************
-**     js/TResultCalendar.js
- **********************************************/
-
+/*************************************************    js/TResultCalendar.js **********************************************/
 class TResultCalendar 
 {
 	constructor() {
@@ -15287,12 +15170,8 @@ function getDayBkgColorCode(p)
 	return "white";
 }
 
-
-/***********************************************
-**     js/TResultToday.js
- **********************************************/
-
-﻿class TResultToday
+/*************************************************    js/TResultToday.js **********************************************/
+class TResultToday
 {
 	constructor()
 	{
@@ -15328,11 +15207,7 @@ function getDayBkgColorCode(p)
 
 }
 
-
-/***********************************************
-**     js/TResultApp.js
- **********************************************/
-
+/*************************************************    js/TResultApp.js **********************************************/
 class AppDayBase
 {
   constructor() {
@@ -15492,11 +15367,7 @@ class TResultApp
   }
 }
 
-
-/***********************************************
-**     js/TResultCoreEvents.js
- **********************************************/
-
+/*************************************************    js/TResultCoreEvents.js **********************************************/
 
     class TResultCoreEvents
     {
@@ -15815,12 +15686,8 @@ class TResultApp
     }
   }
 
-
-/***********************************************
-**     js/TResultMasaList.js
- **********************************************/
-
-﻿class TResultMasaList {
+/*************************************************    js/TResultMasaList.js **********************************************/
+class TResultMasaList {
   constructor() {
     this.arr = [];
     this.vc_end = new GregorianDateTime();
@@ -15908,11 +15775,7 @@ class TResultMasa	{
   }
 }
 
-
-/***********************************************
-**     js/TCalendarFormatter.js
- **********************************************/
-
+/*************************************************    js/TCalendarFormatter.js **********************************************/
 
 
 function getDayBkgColorCode(/*VAISNAVADAY */ p)
@@ -15926,6 +15789,11 @@ function getDayBkgColorCode(/*VAISNAVADAY */ p)
 	return "";
 }
 
+function getDateRangeText(d1, d2) {
+	return sprintf(" %s %d - %s %d ", 
+		GregorianDateTime.GetMonthAbreviation(d1.month), d1.day,
+		GregorianDateTime.GetMonthAbreviation(d2.month), d2.day);
+}
 /******************************************************************************************/
 /*                                                                                        */
 /******************************************************************************************/
@@ -15942,6 +15810,14 @@ function writeCalendarHtml(daybuff)
 	var curCell = null;
 	var main = document.createElement('div');
 	var pp, sp;
+
+	var thisStart = daybuff.GetDay(0).date;
+	var dates = [ thisStart.cloneDays(-daybuff.m_vcCount),
+				  thisStart.cloneDays(-1),
+				  thisStart,
+				  thisStart.cloneDays(daybuff.m_vcCount - 1),
+				  thisStart.cloneDays(daybuff.m_vcCount),
+				  thisStart.cloneDays(2*daybuff.m_vcCount - 1)];
 
 	for (k = 0; k < daybuff.m_vcCount; k++)
 	{
@@ -15981,7 +15857,33 @@ function writeCalendarHtml(daybuff)
 					setTab('loc');
 				};
 				pp.appendChild(sp);
+				pp.appendChild(document.createElement('br'));
 
+				/* link to prev date range */
+				sp = document.createElement('span');
+				sp.className = 'datelink';
+				sp.onclick = function() {
+					setStartDate(this.getAttribute('data_start'));
+				}
+				sp.setAttribute('data_start', dates[0].triplet);
+				sp.innerText = sprintf(" %s %s ", getDateRangeText(dates[0], dates[1]), String.fromCharCode(10096));
+				pp.appendChild(sp);
+				/* info about current date range */
+				sp = document.createElement('span');
+				sp.className = 'datelinkbase';
+				sp.innerText = getDateRangeText(dates[2], dates[3]);
+				pp.appendChild(sp);
+				/* link to next date range */
+				sp = document.createElement('span');
+				sp.className = 'datelink';
+				sp.onclick = function() {
+					setStartDate(this.getAttribute('data_start'));
+				}
+				sp.setAttribute('data_start', dates[4].triplet);
+				sp.innerText = sprintf(" %s %s ", String.fromCharCode(10097), getDateRangeText(dates[4], dates[5]));
+				pp.appendChild(sp);
+
+				/* calendar days are in the table  */
 				curTable = document.createElement('table');
 				curTable.align = 'center';
 				main.appendChild(curTable);
@@ -16038,7 +15940,35 @@ function writeCalendarHtml(daybuff)
 			curRow.appendChild(curCell);
 
 			curCell = document.createElement('td');
-			curCell.innerText = pvd.GetFullTithiName();
+			curCell.setAttribute('data_dets', 'd' + k.toString());
+			curCell.onclick = function() {
+				var a = this.getAttribute('data_dets');
+				var el1 = document.getElementById(a);
+				if (el1.style.display == 'none') {
+					el1.style.display = 'block';
+				} else {
+					el1.style.display = 'none';
+				}
+			}
+			//curCell.innerText = pvd.GetFullTithiName();
+			sp = document.createElement('span');
+			sp.className = 'clickable_tithi_name';
+			sp.innerText = pvd.GetFullTithiName();
+			curCell.appendChild(sp);
+			pp = document.createElement('div');
+			pp.style.paddingLeft = 20;
+			pp.style.marginTop = 16;
+			pp.style.marginBottom = 16;
+			pp.style.display = 'none';
+			pp.id = 'd' + k.toString();
+			curCell.appendChild(pp);
+			for (var ce of pvd.coreEvents.items())
+			{
+				sp = document.createElement('p');
+				sp.className = 'core-events';
+				sp.innerText = sprintf("%s %s", ce.TypeString(), ce.getTimeString(pvd.UtcDayStart));
+				pp.appendChild(sp);
+			}
 			curRow.appendChild(curCell);
 
 			curCell = document.createElement('td');
@@ -16105,4 +16035,3 @@ function writeCalendarHtml(daybuff)
 	return main;
 }
  
-

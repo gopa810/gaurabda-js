@@ -1,0 +1,55 @@
+body {
+    font-family:Verdana;
+    font-size:11pt;
+}
+td {
+  vertical-align: top;
+}
+  td.hed {
+    font-family:Verdana;
+    font-size:9pt;
+    font-weight:bold;
+    background:#aaaaaa;
+    color:white;
+    text-align:center;
+    vertical-align:center;
+  padding-left:15pt;
+  padding-right:15pt;
+    padding-top:5pt;
+  padding-bottom:5pt;
+}
+.loclink {
+  font-size:10pt;
+  color:gray;
+  cursor: pointer;
+}
+.loclink:hover {
+  text-decoration:underline;
+  color: #0000f0;
+  cursor: pointer;
+}
+.datelinkbase {
+  font-size:10pt;
+  color: gray;
+}
+.datelink {
+  font-size:10pt;
+  color: lightgray;
+  cursor: pointer;
+}
+.datelink:hover {
+  text-decoration:underline;
+  color: blue;
+  cursor: pointer;
+}
+.core-events {
+  padding:0pt;
+  margin: 0 0 0 0;
+  font-size: 9pt;
+}
+.clickable_tithi_name {
+  cursor: pointer;
+}
+.clickable_tithi_name:hover {
+  color:green;
+}

@@ -14,21 +14,11 @@ class Convert {
 	}
 
 	static FormatD2(a) {
-		if (a < 10)
-			return "0" + a.toString()
-		else
-			return a.toString()
+		return sprintf("%02d", a);
 	}
 
 	static FormatD4(a) {
-		if (a < 10)
-			return "000" + a.toString()
-		else if (a < 100)
-			return "00" + a.toString()
-		else if (a < 1000)
-			return "0" + a.toString()
-		else
-			return a.toString()
+		return sprintf("%04d", a);
 	}
 
 }

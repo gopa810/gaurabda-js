@@ -1,0 +1,31 @@
+<html>
+
+<head>
+  <style>
+  </style>
+  <link rel='stylesheet' href='calendar.css'>
+  <script src="gcal.js"></script>
+  <script src="gcal-ui.js"></script>
+</head>
+
+<body>
+  <div id='calendarText' style='display:none;'></div>
+
+  <div id='selectLoc' style='display:none;'>
+    <h1>Find location</h1>
+    <p>Type part of location name into text field and select location from list
+       below. Search is case insensitive. You can type part of city name or 
+       part of country name.</p>
+    <input type=text size=40 id='userloc' onkeyup="findLoc('userloc', 'locations')">
+    <button type='button' onclick="findLoc('userloc', 'locations')">Search</button>
+    <div id='locations'></div>
+  </div>
+  
+  <script>
+
+    calcCalendar(g_start_date);
+    setTab('cal');
+
+  </script>
+</body>
+</html>

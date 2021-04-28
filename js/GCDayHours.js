@@ -17,17 +17,17 @@ class DAYTIME {
         this.hour = parseInt( Math.floor(time_hr) );
     
         // minute
-        time_hr -= hour;
+        time_hr -= this.hour;
         time_hr *= 60;
         this.min = parseInt( Math.floor(time_hr) );
     
         // second
-        time_hr -= min;
+        time_hr -= this.min;
         time_hr *= 60;
         this.sec = parseInt( Math.floor(time_hr) );
     
         // miliseconds
-        time_hr -= sec;
+        time_hr -= this.sec;
         time_hr *= 1000;
         this.mili = parseInt( Math.floor(time_hr) );
     }

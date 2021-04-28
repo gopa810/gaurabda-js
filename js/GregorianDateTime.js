@@ -46,11 +46,31 @@ class GregorianDateTime {
 		return dt
 	}
 	
+	get triplet() {
+		return sprintf('%04d-%02d-%02d', this.year, this.month, this.day);
+	}
+
+	static fromTriplet(str) {
+		var parts = str.split('-');
+		if (parts.length == 3) {
+			return GregorianDateTime.fromComponents(parseInt(parts[0], 10),
+				parseInt(parts[1], 10), parseInt(parts[2], 10));
+		}
+		return GregorianDateTime();
+	}
+
 	static fromComponents(year, month, day) {
 		var d = new GregorianDateTime();
 		d.year = year;
 		d.month = month;
 		d.day = day;
+		return d;
+	}
+
+	cloneDays(daysOffset) {
+		var d = new GregorianDateTime();
+		d.Set(this);
+		d.AddDays(daysOffset);
 		return d;
 	}
 
@@ -72,6 +92,7 @@ class GregorianDateTime {
 			this.dayOfWeek = gdt.dayOfWeek
 			this.TimezoneHours = gdt.TimezoneHours
 		}
+		return this;
 	}
 	
 	SetDate(nYear,nMonth,nDay) {
@@ -266,6 +287,7 @@ class GregorianDateTime {
 			this.day = GregorianDateTime.GetMonthMaxDays(this.year, this.month);
 		}
 		this.dayOfWeek = (this.dayOfWeek + 6) % 7;
+		return this;
 	}
 
 	NextDay() {
@@ -281,16 +303,18 @@ class GregorianDateTime {
 			this.day = 1;
 		}
 		this.dayOfWeek = (this.dayOfWeek + 1) % 7;
+		return this;
 	}
 	
 	AddDays(n) {
 		if (n < 0) {
-			this.SubtractDays(-n)
+			return this.SubtractDays(-n)
 		} else {
-			for (i = 0; i < n; i++) {
+			for (var i = 0; i < n; i++) {
 				this.NextDay();
 			}
 		}
+		return this;
 	}
 
 	// julianUtcDate (double)
@@ -336,6 +360,7 @@ class GregorianDateTime {
 				this.PreviousDay();
 			}
 		}
+		return this;
 	}
 	
 	AddHours(ndst) {
