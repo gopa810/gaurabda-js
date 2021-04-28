@@ -727,9 +727,7 @@ class VAISNAVADAY
 		var str = ""
 		var e1, e2;
 
-		console.log('GetTextEP eparana_time1=', this.eparana_time1);
 		e1 = this.GetGregorianDateTime(this.eparana_time1);
-		console.log('GetTextEP e1=', e1);
 		if (this.eparana_time2 != null)
 		{
 			e2 = this.GetGregorianDateTime(this.eparana_time2);
@@ -934,7 +932,7 @@ class VAISNAVADAY
 
 	HasExtraFastingNote()
 	{
-		var t = astrodata.sunRise.Tithi;
+		var t = this.astrodata.sunRise.Tithi;
 		if ((t == 10) || (t == 25) || (t == 11) || (t == 26))
 		{
 			if (this.ekadasi_parana == false)

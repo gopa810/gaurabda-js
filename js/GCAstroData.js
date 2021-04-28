@@ -227,11 +227,11 @@
 		// masa
 		this.Masa = -1;
 
-		date.shour = sunSet.TotalDays;
+		date.shour = this.sunSet.TotalDays;
 		this.sunSet.longitudeMoon = GCCoreAstronomy.GetMoonLongitude(date, earth);
 
 
-		date.shour = sunArunodaya.TotalDays;
+		date.shour = this.sunArunodaya.TotalDays;
 		this.sunArunodaya.longitudeMoon = GCCoreAstronomy.GetMoonLongitude(date, earth);
 
 

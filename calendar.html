@@ -1,0 +1,181 @@
+<html>
+
+<head>
+  <style>
+	body {
+	  font-family:Verdana;
+	  font-size:11pt;
+  }
+	td.hed {
+	  font-family:Verdana;
+	  font-size:9pt;
+	  font-weight:bold;
+	  background:#aaaaaa;
+	  color:white;
+	  text-align:center;
+	  vertical-align:center;
+    padding-left:15pt;
+    padding-right:15pt;
+	  padding-top:5pt;
+    padding-bottom:5pt;
+  }
+  .loclink {
+    font-size:10pt;
+    color: #0000a0;
+    cursor: pointer;
+  }
+  .loclink:hover {
+    text-decoration:underline;
+    color: #0000f0;
+    cursor: pointer;
+  }
+  </style>
+</head>
+
+<script src="js/sprintf.js"></script>
+<script src="js/System.js"></script>
+<script src="js/Enums.js"></script>
+<script src="js/GCMath.js"></script>
+<script src="js/GCDayHours.js"></script>
+<script src="js/GCAyanamsha.js"></script>
+<script src="js/GCRasi.js"></script>
+<script src="js/TCountry.js"></script>
+<script src="js/GregorianDateTime.js"></script>
+<script src="js/GCPaksa.js"></script>
+<script src="js/GaurabdaDate.js"></script>
+<script src="js/TCoreEvent.js"></script>
+<script src="js/GCEkadasi.js"></script>
+<script src="js/GCEarthData.js"></script>
+<script src="js/GCStrings.js"></script>
+<script src="js/TTimeZone.js"></script>
+<script src="js/GCLocation.js"></script>
+<script src="js/GCSunData.js"></script>
+<script src="js/GCMoonData.js"></script>
+<script src="js/GCSankranti.js"></script>
+<script src="js/GCCoreAstronomy.js"></script>
+<script src="js/GCCalendar.js"></script>
+<script src="js/Vaisnavaday.js"></script>
+<script src="js/GCMasa.js"></script>
+<script src="js/GCTithi.js"></script>
+<script src="js/GCAstroData.js"></script>
+<script src="js/GCNaksatra.js"></script>
+<script src="js/GCYoga.js"></script>
+<script src="js/GCDisplaySettings.js"></script>
+<script src="js/GCConjunction.js"></script>
+<script src="js/GCHourTime.js"></script>
+<script src="js/events.js"></script>
+<script src="js/GCFestivalBase.js"></script>
+<script src="js/GCFestivalSpecialExecutor.js"></script>
+<script src="js/TResultCalendar.js"></script>
+<script src="js/TResultToday.js"></script>
+<script src="js/TResultApp.js"></script>
+<script src="js/TResultCoreEvents.js"></script>
+<script src="js/TResultMasaList.js"></script>
+<script src="js/TCalendarFormatter.js"></script>
+
+
+
+<script>
+
+//GCDisplaySettings.Reset()
+var loc = null;
+var loctext = window.localStorage.getItem('location');
+if (loctext != null && loctext != undefined) {
+  var d = JSON.parse(loctext);
+  loc = new GCLocation(d);
+} else {
+  loc = GCLocation.FindByName("Bratislava");
+  window.localStorage.setItem('location', loc.Encoded);
+}
+</script>
+
+<body>
+  <div id='calendarText'></div>
+
+  <div id='selectLoc'>
+    <input type=text size=40 id='userloc' onkeyup="findLoc('userloc', 'locations')">
+    <button type='button' onclick="findLoc('userloc', 'locations')">Search</button>
+    <div id='locations'></div>
+  </div>
+  
+  <script>
+    var d1 = new GregorianDateTime();
+
+    function calcCalendar(d1) {
+      //document.write('<h2>Calendar</h2>');
+      tc = new TResultCalendar();
+      tc.CalculateCalendar(loc, d1, 20);
+
+      var elem = writeCalendarHtml(tc);
+      var epar = document.getElementById('calendarText');
+      while (epar.lastChild) {
+        epar.removeChild(epar.lastChild);
+      }
+      epar.appendChild(elem);
+    }
+
+
+    function setTab(tb) {
+      function gd3(a) {
+        return a == tb ? 'block' : 'none';
+      }
+      document.getElementById('calendarText').style.display = gd3('cal');
+      if (tb == 'loc') {
+        document.getElementById('selectLoc').style.display = 'block';
+      }
+      if (tb == 'cal') {
+        document.getElementById('selectLoc').style.display = 'none';
+      }
+    }
+
+    calcCalendar(d1);
+    setTab('cal');
+
+    function setLoc(locEnc) {
+      window.localStorage.setItem('location', locEnc);
+      var locData = JSON.parse(locEnc);
+      loc = new GCLocation(locData);
+      calcCalendar(d1);
+      setTab('cal');
+    }
+
+    function findLoc(srcId, targetId) {
+      var text = document.getElementById(srcId).value;
+      var target = document.getElementById(targetId);
+      var locs = GCLocation.Search(text);
+      while (target.lastChild) {
+        target.removeChild(target.lastChild);
+      }
+      if (locs.length == 0) {
+        var el = document.createElement('div');
+        el.innerText = sprintf('No locations for \'%s\'', text);
+        target.appendChild(el);
+      } else {
+        for (var L of locs) {
+          var el = document.createElement('div');
+          el.style.borderBottom = '1px solid gray';
+          el.style.padding = '4px';
+          el.style.cursor = 'pointer';
+          el.setAttribute('data_loc', L.Encoded);
+          el.onclick = function() {
+            setLoc(this.getAttribute('data_loc'));
+          }
+          var subel = document.createElement('span');
+          subel.style.fontSize = '120%';
+          subel.innerText = L.Title;
+          el.appendChild(subel);
+          el.appendChild(document.createElement('br'));
+          subel = document.createElement('span');
+          subel.innerText = L.GetCoordinatesText();
+          el.appendChild(subel);
+          target.appendChild(el);
+        }
+      }
+    }
+  </script>
+
+
+</body>
+
+
+</html>

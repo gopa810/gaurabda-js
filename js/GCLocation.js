@@ -24,6 +24,11 @@ class GCLocation {
     }
   }
 
+  get Encoded() {
+    var d = [this.City, this.p_countryname, this.Longitude,
+      this.Latitude, this.p_timezoneoffset, this.p_timezone.TimezoneId];
+    return JSON.stringify(d);
+  }
 
     get OffsetUtcHours() {
       if (this.TimeZone == null) {
@@ -111,8 +116,14 @@ class GCLocation {
     GetFullName() {
       return this.Title + " (" +
          GCEarthData.GetTextLatitude(this.Latitude) + ", " +
-         GCEarthData.GetTextLongitude(this.Longitude) + ", Timezone: " +
+         GCEarthData.GetTextLongitude(this.Longitude) + "), Timezone: " +
          this.TimeZoneName;
+    }
+
+    GetCoordinatesText() {
+      return sprintf('%s, %s  (%s)', GCEarthData.GetTextLatitude(this.Latitude),
+         GCEarthData.GetTextLongitude(this.Longitude),
+         this.TimeZoneName);
     }
 
     toString() {
@@ -131,6 +142,26 @@ class GCLocation {
         }
       }
       return GCLocation_Default;
+    }
+
+    static Search(name) {
+      var a = [], b = [], c=[], d=[];
+      var name0 = name.toUpperCase();
+      for (var lc of GCLocation_List) {
+        var lc0 = lc[0].toUpperCase();
+        var cc0 = lc[1].toUpperCase();
+        if (lc0 == name0 && a.length<10) {
+          a.push(new GCLocation(lc));
+        } else if (lc0.substr(0,name.length) == name0 && b.length<10) {
+          b.push(new GCLocation(lc));
+        } else if (lc0.includes(name0) && c.length<10) {
+          c.push(new GCLocation(lc));
+        } else if (name.length > 1 && cc0.includes(name0) && d.length<10) {
+          d.push(new GCLocation(lc));
+        }
+      }
+
+      return a.concat(b, c, d).slice(0, 10);
     }
 }
 

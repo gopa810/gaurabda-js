@@ -282,7 +282,6 @@ class TResultCalendar
 		{
 			if (t.Previous != null && t.Previous.nFastID == FastType.FAST_EKADASI)
 			{
-				console.log('Eparana day: ', t)
 				t.CalculateEParana(earth);
 			}
 		}
