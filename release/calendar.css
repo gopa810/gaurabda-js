@@ -53,3 +53,54 @@ td {
 .clickable_tithi_name:hover {
   color:green;
 }
+
+/* table calendar */
+
+p.MsoNormal, li.MsoNormal, div.MsoNormal	{
+  margin:0in;
+  margin-bottom:.0001pt;
+  font-size:8.0pt;
+  font-family:Arial;
+}
+
+p.month {
+  margin-right:0in;
+  margin-left:0in;
+  font-size:17.0pt;
+  font-family:Arial;
+}
+
+.text {
+  margin-right:0in;
+  margin-left:0in;
+  font-size:7.0pt;
+  font-family:Arial;
+}
+
+.tnote
+{
+  margin-right:0in;
+  margin-left:0in;
+  font-size:8.0pt;
+  font-family:Arial;
+}
+
+.tithiname
+{
+  margin-right:0in;
+  margin-left:0in;
+  font-size:8.0pt;
+  font-family:Arial;
+}
+
+.dayt	{
+  font-size:12.0pt;
+  font-family:Arial;
+  font-weight:bold;
+}
+
+span.SpellE {
+}
+
+span.GramE {
+}

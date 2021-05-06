@@ -6,7 +6,7 @@ import re
 #
 
 text = ''
-with open('calendar.html', 'rt', encoding='utf-8') as cf:
+with open('index.html', 'rt', encoding='utf-8') as cf:
     text = cf.read()
     text = text.strip()
 

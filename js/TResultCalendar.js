@@ -28,25 +28,8 @@ class TResultCalendar
 		var sdate = new GregorianDateTime()
 		sdate.year = nYear
 		sdate.month = nMonth
-		this.CalculateCalendar(loc, sdate, GetMonthMaxDays(nYear, nMonth))
-	}
-
-	//int DAYS_TO_ENDWEEK(int lastMonthDay)
-	DAYS_TO_ENDWEEK(lastMonthDay)
-	{
-		return (21 - (lastMonthDay - this.m_Location.FirstDayOfWeek)) % 7;
-	}
-
-	//int DAYS_FROM_BEGINWEEK(int firstMonthDay)
-	DAYS_FROM_BEGINWEEK(firstMonthDay)
-	{
-		return (firstMonthDay - this.m_Location.FirstDayOfWeek + 14) % 7;
-	}
-
-	//int DAY_INDEX(int day)
-	DAY_INDEX(day)
-	{
-		return (day + this.m_Location.FirstDayOfWeek) % 7;
+		sdate.day = 1
+		this.CalculateCalendar(loc, sdate, GregorianDateTime.GetMonthMaxDays(nYear, nMonth))
 	}
 
     // CalculateCalendar(GCLocation loc, GregorianDateTime begDate, int iCount)

@@ -1,13 +1,17 @@
 var g_location = null;
 var g_start_date = new GregorianDateTime();
+var g_show_type = -1;
 
-console.log(location);
 const urlParams = new URLSearchParams(location.search);
 for (const [key, value] of urlParams) {
     if (key=='date') {
         g_start_date = GregorianDateTime.fromTriplet(value);
     } else if (key == 'bloc') {
         g_location = GCLocation.FindByName(value);
+        window.localStorage.setItem('location', g_location.Encoded);
+    } else if (key == 'st') {
+        g_show_type = parseInt(value, 10);
+        window.localStorage.setItem('show_type', g_show_type.toString());
     }
 }
 
@@ -23,17 +27,38 @@ if (g_location == null) {
     }
 }
 
-function calcCalendar(d1) {
-    //document.write('<h2>Calendar</h2>');
-    tc = new TResultCalendar();
-    tc.CalculateCalendar(g_location, d1, 20);
-
-    var elem = writeCalendarHtml(tc);
-    var epar = document.getElementById('calendarText');
-    while (epar.lastChild) {
-        epar.removeChild(epar.lastChild);
+if (g_show_type < 0) {
+    var cttext = window.localStorage.getItem('show_type');
+    if (cttext != null && cttext != undefined) {
+        g_show_type = parseInt(cttext, 10);
+    } else {
+        g_show_type = 0;
+        window.localStorage.setItem('show_type', g_show_type.toString());
     }
-    epar.appendChild(elem);
+}
+
+function calcCalendar(d1) {
+    var conte_elem = null;
+
+    if (g_show_type == 0) {
+        var tc = new TResultCalendar();
+        tc.CalculateCalendar(g_location, d1, 20);
+    
+        conte_elem = writeCalendarHtml(tc);
+    } else if (g_show_type == 1) {
+        var tc = new TResultCalendar();
+        tc.CalculateMonth(g_location, d1.year, d1.month);
+
+        conte_elem = writeTableHtml(tc);
+    }
+
+    if (conte_elem != null) {
+        var epar = document.getElementById('calendarText');
+        while (epar.lastChild) {
+            epar.removeChild(epar.lastChild);
+        }
+        epar.appendChild(conte_elem);
+    }
   }
 
 

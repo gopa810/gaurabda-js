@@ -87,6 +87,10 @@ class TTimeZone {
 		return 0;
 	}
 
+	get TimeZoneOffsetText() {
+		return TTimeZone.GetTimeZoneOffsetText(this.OffsetMinutes/60);
+	}
+
 	static GetTimeZoneOffsetText(d)
 	{
 		var a4, a5;

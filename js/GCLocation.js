@@ -62,7 +62,11 @@ class GCLocation {
 
     get FirstDayOfWeek() {
       if (this.Country != null)
+      {
+        if (this.Country.FirstDayOfWeek != undefined) {
           return this.Country.FirstDayOfWeek;
+        }
+      }
       return gds.getValue(GCDS.GENERAL_FIRST_DOW);
     }
 
@@ -113,11 +117,21 @@ class GCLocation {
         return GCEarthData.GetTextLongitude(Longitude);
     }
 
+    GetLocationText() {
+      return this.Title + " (" +
+         GCEarthData.GetTextLatitude(this.Latitude) + ", " +
+         GCEarthData.GetTextLongitude(this.Longitude) + ")";
+    }
+
     GetFullName() {
       return this.Title + " (" +
          GCEarthData.GetTextLatitude(this.Latitude) + ", " +
          GCEarthData.GetTextLongitude(this.Longitude) + "), Timezone: " +
          this.TimeZoneName;
+    }
+
+    GetTimeZoneText() {
+      return sprintf("%s %s", this.TimeZoneName, this.TimeZone.TimeZoneOffsetText);
     }
 
     GetCoordinatesText() {
