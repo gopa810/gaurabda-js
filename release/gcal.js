@@ -997,7 +997,8 @@ class TCountry {
         this.abbreviatedName = "";
         this.name = "";
         this.code = 0;
-        this.continent = 0;    
+        this.continent = 0;
+        this.FirstDayOfWeek = 0;
     }
 
 	static modified(value) {
@@ -1097,43 +1098,43 @@ class TCountry {
 }
 
 var TCountry_gcountries = [
-    { code: 'AD', name: 'Andorra', continent: 1 },
-    { code: 'AE', name: 'United Arab Emirates', continent: 2 },
-    { code: 'AF', name: 'Afghanistan', continent: 2 },
+    { code: 'AD', name: 'Andorra', continent: 1, FirstDayOfWeek: 1 },
+    { code: 'AE', name: 'United Arab Emirates', continent: 2, FirstDayOfWeek: 6 },
+    { code: 'AF', name: 'Afghanistan', continent: 2, FirstDayOfWeek: 6 },
     { code: 'AG', name: 'Antigua', continent: 4 },
-    { code: 'AL', name: 'Albania', continent: 1 },
-    { code: 'AM', name: 'Armenia', continent: 2 },
+    { code: 'AL', name: 'Albania', continent: 1, FirstDayOfWeek: 1 },
+    { code: 'AM', name: 'Armenia', continent: 2, FirstDayOfWeek: 1 },
     { code: 'AN', name: 'Curacao', continent: 4 },
     { code: 'AO', name: 'Angola', continent: 3 },
-    { code: 'AR', name: 'Argentina', continent: 4 },
+    { code: 'AR', name: 'Argentina', continent: 4, FirstDayOfWeek: 0 },
     { code: 'AS', name: 'American Samoa', continent: 5 },
-    { code: 'AT', name: 'Austria', continent: 1 },
-    { code: 'AU', name: 'Australia', continent: 0 },
+    { code: 'AT', name: 'Austria', continent: 1, FirstDayOfWeek: 1 },
+    { code: 'AU', name: 'Australia', continent: 0, FirstDayOfWeek: 1 },
     { code: 'AW', name: 'Aruba', continent: 4 },
-    { code: 'AZ', name: 'Azerbaijan', continent: 2 },
+    { code: 'AZ', name: 'Azerbaijan', continent: 2, FirstDayOfWeek: 1 },
     { code: 'BA', name: 'Bosnia and Herzegovina', continent: 1 },
     { code: 'BB', name: 'Barbados', continent: 4 },
     { code: 'BD', name: 'Bangladesh', continent: 2 },
-    { code: 'BE', name: 'Belgium', continent: 1 },
+    { code: 'BE', name: 'Belgium', continent: 1, FirstDayOfWeek: 1 },
     { code: 'BF', name: 'Burkina Faso', continent: 3 },
-    { code: 'BG', name: 'Bulgaria', continent: 1 },
-    { code: 'BH', name: 'Bahrain', continent: 2 },
+    { code: 'BG', name: 'Bulgaria', continent: 1, FirstDayOfWeek: 1 },
+    { code: 'BH', name: 'Bahrain', continent: 2, FirstDayOfWeek: 6 },
     { code: 'BI', name: 'Burundi', continent: 3 },
     { code: 'BJ', name: 'Benin', continent: 3 },
     { code: 'BL', name: 'Guadeloupe', continent: 4 },
-    { code: 'BN', name: 'Brunei', continent: 2 },
+    { code: 'BN', name: 'Brunei', continent: 2, FirstDayOfWeek: 1 },
     { code: 'BO', name: 'Bolivia', continent: 4 },
     { code: 'BR', name: 'Brazil', continent: 4 },
     { code: 'BS', name: 'Bahamas', continent: 4 },
     { code: 'BT', name: 'Bhutan', continent: 2 },
     { code: 'BW', name: 'Botswana', continent: 3 },
-    { code: 'BY', name: 'Belarus', continent: 1 },
+    { code: 'BY', name: 'Belarus', continent: 1, FirstDayOfWeek: 1 },
     { code: 'BZ', name: 'Belize', continent: 4 },
     { code: 'CA', name: 'Canada', continent: 4 },
     { code: 'CD', name: 'Democratic Republic of the Congo', continent: 3 },
     { code: 'CF', name: 'Central African Republic', continent: 3 },
     { code: 'CG', name: 'Congo', continent: 3 },
-    { code: 'CH', name: 'Switzerland', continent: 1 },
+    { code: 'CH', name: 'Switzerland', continent: 1, FirstDayOfWeek: 1 },
     { code: 'CI', name: 'Ivory Coast', continent: 3 },
     { code: 'CK', name: 'Cook Islands', continent: 5 },
     { code: 'CL', name: 'Chile', continent: 4 },
@@ -1144,29 +1145,29 @@ var TCountry_gcountries = [
     { code: 'CU', name: 'Cuba', continent: 4 },
     { code: 'CV', name: 'Cape Verde', continent: 7 },
     { code: 'CY', name: 'Cyprus', continent: 2 },
-    { code: 'CZ', name: 'Czech', continent: 1 },
-    { code: 'DE', name: 'Germany', continent: 1 },
+    { code: 'CZ', name: 'Czech', continent: 1, FirstDayOfWeek: 1 },
+    { code: 'DE', name: 'Germany', continent: 1, FirstDayOfWeek: 1 },
     { code: 'DJ', name: 'Djibouty', continent: 3 },
-    { code: 'DK', name: 'Denmark', continent: 1 },
+    { code: 'DK', name: 'Denmark', continent: 1, FirstDayOfWeek: 1 },
     { code: 'DM', name: 'Dominica', continent: 4 },
     { code: 'DO', name: 'Dominican Republic', continent: 4 },
     { code: 'DZ', name: 'Algeria', continent: 3 },
     { code: 'EC', name: 'Ecuador', continent: 4 },
-    { code: 'EE', name: 'Estonia', continent: 1 },
-    { code: 'EG', name: 'Egypt', continent: 3 },
+    { code: 'EE', name: 'Estonia', continent: 1, FirstDayOfWeek: 1 },
+    { code: 'EG', name: 'Egypt', continent: 3, FirstDayOfWeek: 6 },
     { code: 'EH', name: 'Western Sahara', continent: 3 },
     { code: 'ER', name: 'Eritrea', continent: 3 },
-    { code: 'ES', name: 'Spain', continent: 3 },
+    { code: 'ES', name: 'Spain', continent: 3, FirstDayOfWeek: 1 },
     { code: 'ET', name: 'Ethiopia', continent: 3 },
-    { code: 'FI', name: 'Finland', continent: 1 },
+    { code: 'FI', name: 'Finland', continent: 1, FirstDayOfWeek: 1 },
     { code: 'FJ', name: 'Fiji', continent: 5 },
     { code: 'FM', name: 'Ponape', continent: 5 },
     { code: 'FO', name: 'Faroe', continent: 7 },
-    { code: 'FR', name: 'France', continent: 1 },
+    { code: 'FR', name: 'France', continent: 1, FirstDayOfWeek: 1 },
     { code: 'GA', name: 'Gabon', continent: 3 },
-    { code: 'GB', name: 'United Kingdom', continent: 1 },
-    { code: 'GE', name: 'Georgia', continent: 2 },
-    { code: 'GF', name: 'French Guiana', continent: 4 },
+    { code: 'GB', name: 'United Kingdom', continent: 1, FirstDayOfWeek: 1 },
+    { code: 'GE', name: 'Georgia', continent: 2, FirstDayOfWeek: 1 },
+    { code: 'GF', name: 'French Guiana', continent: 4, FirstDayOfWeek: 1 },
     { code: 'GH', name: 'Ghana', continent: 3 },
     { code: 'GI', name: 'Gibraltar', continent: 1 },
     { code: 'GL', name: 'Greenland', continent: 4 },
@@ -1174,59 +1175,59 @@ var TCountry_gcountries = [
     { code: 'GN', name: 'Guinea', continent: 3 },
     { code: 'GP', name: 'Guadeloupe', continent: 4 },
     { code: 'GQ', name: 'Equatorial Guinea', continent: 3 },
-    { code: 'GR', name: 'Greece', continent: 1 },
+    { code: 'GR', name: 'Greece', continent: 1, FirstDayOfWeek: 1 },
     { code: 'GT', name: 'Guatemala', continent: 4 },
     { code: 'GU', name: 'Guam', continent: 5 },
     { code: 'GW', name: 'Guinea-Bissau', continent: 3 },
     { code: 'GY', name: 'Guyana', continent: 4 },
     { code: 'HK', name: 'Hong Kong', continent: 2 },
     { code: 'HN', name: 'Honduras', continent: 4 },
-    { code: 'HR', name: 'Croatia', continent: 1 },
+    { code: 'HR', name: 'Croatia', continent: 1, FirstDayOfWeek: 1 },
     { code: 'HT', name: 'Haiti', continent: 4 },
-    { code: 'HU', name: 'Hungary', continent: 1 },
+    { code: 'HU', name: 'Hungary', continent: 1, FirstDayOfWeek: 1 },
     { code: 'ID', name: 'Indonesia', continent: 2 },
-    { code: 'IE', name: 'Ireland', continent: 1 },
+    { code: 'IE', name: 'Ireland', continent: 1, FirstDayOfWeek: 1 },
     { code: 'IL', name: 'Israel', continent: 2 },
-    { code: 'IN', name: 'India', continent: 2 },
-    { code: 'IQ', name: 'Iraq', continent: 2 },
-    { code: 'IR', name: 'Iran', continent: 2 },
-    { code: 'IS', name: 'Iceland', continent: 7 },
-    { code: 'IT', name: 'Italy', continent: 1 },
+    { code: 'IN', name: 'India', continent: 2, FirstDayOfWeek: 1 },
+    { code: 'IQ', name: 'Iraq', continent: 2, FirstDayOfWeek: 6 },
+    { code: 'IR', name: 'Iran', continent: 2, FirstDayOfWeek: 6 },
+    { code: 'IS', name: 'Iceland', continent: 7, FirstDayOfWeek: 1 },
+    { code: 'IT', name: 'Italy', continent: 1, FirstDayOfWeek: 1 },
     { code: 'JM', name: 'Jamaica', continent: 4 },
-    { code: 'JO', name: 'Jordan', continent: 2 },
+    { code: 'JO', name: 'Jordan', continent: 2, FirstDayOfWeek: 6 },
     { code: 'JP', name: 'Japan', continent: 2 },
     { code: 'KE', name: 'Kenya', continent: 3 },
-    { code: 'KG', name: 'Kyrgyzstan', continent: 2 },
+    { code: 'KG', name: 'Kyrgyzstan', continent: 2, FirstDayOfWeek: 1 },
     { code: 'KH', name: 'Cambodia', continent: 2 },
     { code: 'KI', name: 'Kiribati', continent: 5 },
     { code: 'KM', name: 'Comoro', continent: 6 },
     { code: 'KN', name: 'Saint Kitts and Nevis', continent: 4 },
     { code: 'KP', name: 'North Korea', continent: 2 },
     { code: 'KR', name: 'South Korea', continent: 2 },
-    { code: 'KW', name: 'Kuwait', continent: 2 },
+    { code: 'KW', name: 'Kuwait', continent: 2, FirstDayOfWeek: 6 },
     { code: 'KY', name: 'Cauman', continent: 4 },
-    { code: 'KZ', name: 'Kazakhstan', continent: 2 },
+    { code: 'KZ', name: 'Kazakhstan', continent: 2, FirstDayOfWeek: 1 },
     { code: 'LA', name: 'Laos', continent: 2 },
-    { code: 'LB', name: 'Lebanon', continent: 2 },
+    { code: 'LB', name: 'Lebanon', continent: 2, FirstDayOfWeek: 1 },
     { code: 'LC', name: 'Saint Lucia', continent: 4 },
     { code: 'LI', name: 'Liechtenstein', continent: 1 },
     { code: 'LK', name: 'Sri Lanka', continent: 2 },
     { code: 'LR', name: 'Liberia', continent: 3 },
     { code: 'LS', name: 'Lesotho', continent: 3 },
-    { code: 'LT', name: 'Lithuania', continent: 1 },
-    { code: 'LU', name: 'Luxembourg', continent: 1 },
-    { code: 'LV', name: 'Latvia', continent: 1 },
-    { code: 'LY', name: 'Libya', continent: 3 },
-    { code: 'MA', name: 'Morocco', continent: 3 },
-    { code: 'MC', name: 'Monaco', continent: 1 },
+    { code: 'LT', name: 'Lithuania', continent: 1, FirstDayOfWeek: 1 },
+    { code: 'LU', name: 'Luxembourg', continent: 1, FirstDayOfWeek: 1 },
+    { code: 'LV', name: 'Latvia', continent: 1, FirstDayOfWeek: 1 },
+    { code: 'LY', name: 'Libya', continent: 3, FirstDayOfWeek: 6 },
+    { code: 'MA', name: 'Morocco', continent: 3, FirstDayOfWeek: 1 },
+    { code: 'MC', name: 'Monaco', continent: 1, FirstDayOfWeek: 1 },
     { code: 'MD', name: 'Moldova', continent: 1 },
     { code: 'ME', name: 'Montenegro', continent: 1 },
     { code: 'MG', name: 'Madagascar', continent: 6 },
     { code: 'MH', name: 'Marshall Islands', continent: 5 },
-    { code: 'MK', name: 'Macedonia', continent: 1 },
+    { code: 'MK', name: 'Macedonia', continent: 1, FirstDayOfWeek: 1 },
     { code: 'ML', name: 'Mali', continent: 3 },
     { code: 'MM', name: 'Burma', continent: 2 },
-    { code: 'MN', name: 'Mongolia', continent: 2 },
+    { code: 'MN', name: 'Mongolia', continent: 2, FirstDayOfWeek: 1 },
     { code: 'MP', name: 'Northern Mariana Islands', continent: 5 },
     { code: 'MQ', name: 'Martinique', continent: 4 },
     { code: 'MR', name: 'Mauritania', continent: 3 },
@@ -1235,44 +1236,44 @@ var TCountry_gcountries = [
     { code: 'MV', name: 'Maldives', continent: 6 },
     { code: 'MW', name: 'Malawi', continent: 3 },
     { code: 'MX', name: 'Mexico', continent: 4 },
-    { code: 'MY', name: 'Malaysia', continent: 2 },
+    { code: 'MY', name: 'Malaysia', continent: 2, FirstDayOfWeek: 1 },
     { code: 'MZ', name: 'Mozambique', continent: 3 },
     { code: 'NA', name: 'Nairobi', continent: 3 },
     { code: 'NC', name: 'New Caledonia', continent: 5 },
     { code: 'NE', name: 'Niger', continent: 3 },
     { code: 'NG', name: 'Nigeria', continent: 3 },
     { code: 'NI', name: 'Nicaragua', continent: 4 },
-    { code: 'NL', name: 'Netherlands', continent: 1 },
-    { code: 'NO', name: 'Norway', continent: 1 },
+    { code: 'NL', name: 'Netherlands', continent: 1, FirstDayOfWeek: 1 },
+    { code: 'NO', name: 'Norway', continent: 1, FirstDayOfWeek: 1 },
     { code: 'NP', name: 'Nepal', continent: 2 },
-    { code: 'NZ', name: 'New Zealand', continent: 5 },
-    { code: 'OM', name: 'Oman', continent: 2 },
+    { code: 'NZ', name: 'New Zealand', continent: 5, FirstDayOfWeek: 1 },
+    { code: 'OM', name: 'Oman', continent: 2, FirstDayOfWeek: 6 },
     { code: 'PA', name: 'Panama', continent: 4 },
     { code: 'PE', name: 'Peru', continent: 4 },
     { code: 'PF', name: 'Tahiti', continent: 5 },
     { code: 'PG', name: 'Papua New Guinea', continent: 5 },
     { code: 'PH', name: 'Philippines', continent: 2 },
-    { code: 'PK', name: 'Pakistan', continent: 2 },
-    { code: 'PL', name: 'Poland', continent: 1 },
+    { code: 'PK', name: 'Pakistan', continent: 2, FirstDayOfWeek: 1 },
+    { code: 'PL', name: 'Poland', continent: 1, FirstDayOfWeek: 1 },
     { code: 'PM', name: 'Miquelon', continent: 4 },
     { code: 'PR', name: 'Puerto Rico', continent: 4 },
     { code: 'PS', name: 'Gaza Strip', continent: 2 },
-    { code: 'PT', name: 'Portugal', continent: 1 },
-    { code: 'PY', name: 'Paraguay', continent: 4 },
-    { code: 'QA', name: 'Qatar', continent: 2 },
+    { code: 'PT', name: 'Portugal', continent: 1, FirstDayOfWeek: 1 },
+    { code: 'PY', name: 'Paraguay', continent: 4, FirstDayOfWeek: 1 },
+    { code: 'QA', name: 'Qatar', continent: 2, FirstDayOfWeek: 6 },
     { code: 'RE', name: 'Reunion', continent: 6 },
-    { code: 'RO', name: 'Romania', continent: 1 },
-    { code: 'RS', name: 'Serbia', continent: 1 },
-    { code: 'RU', name: 'Russia', continent: 1 },
+    { code: 'RO', name: 'Romania', continent: 1, FirstDayOfWeek: 1 },
+    { code: 'RS', name: 'Serbia', continent: 1, FirstDayOfWeek: 1 },
+    { code: 'RU', name: 'Russia', continent: 1, FirstDayOfWeek: 1 },
     { code: 'RW', name: 'Rwanda', continent: 3 },
-    { code: 'SA', name: 'Saudi Arabia', continent: 2 },
+    { code: 'SA', name: 'Saudi Arabia', continent: 2, FirstDayOfWeek: 6 },
     { code: 'SB', name: 'Solomon Islands', continent: 5 },
     { code: 'SC', name: 'Mahe', continent: 6 },
     { code: 'SD', name: 'Sudan', continent: 3 },
-    { code: 'SE', name: 'Sweden', continent: 1 },
-    { code: 'SG', name: 'Singapore', continent: 2 },
-    { code: 'SI', name: 'Slovenia', continent: 1 },
-    { code: 'SK', name: 'Slovakia', continent: 1 },
+    { code: 'SE', name: 'Sweden', continent: 1, FirstDayOfWeek: 1 },
+    { code: 'SG', name: 'Singapore', continent: 2, FirstDayOfWeek: 1 },
+    { code: 'SI', name: 'Slovenia', continent: 1, FirstDayOfWeek: 1 },
+    { code: 'SK', name: 'Slovakia', continent: 1, FirstDayOfWeek: 1 },
     { code: 'SL', name: 'Sierra Leone', continent: 3 },
     { code: 'SM', name: 'San Marino', continent: 1 },
     { code: 'SN', name: 'Senegal', continent: 3 },
@@ -1280,31 +1281,31 @@ var TCountry_gcountries = [
     { code: 'SR', name: 'Suriname', continent: 4 },
     { code: 'ST', name: 'Sao Tome', continent: 3 },
     { code: 'SV', name: 'El Salvador', continent: 4 },
-    { code: 'SY', name: 'Syria', continent: 2 },
+    { code: 'SY', name: 'Syria', continent: 2, FirstDayOfWeek: 6 },
     { code: 'SZ', name: 'Swaziland', continent: 3 },
     { code: 'TD', name: 'Chad', continent: 3 },
     { code: 'TG', name: 'Togo', continent: 3 },
-    { code: 'TH', name: 'Thailand', continent: 2 },
+    { code: 'TH', name: 'Thailand', continent: 2, FirstDayOfWeek: 1 },
     { code: 'TJ', name: 'Tajikistan', continent: 2 },
     { code: 'TL', name: 'Lesser Sunda Islands', continent: 2 },
     { code: 'TM', name: 'Turkmenistan', continent: 2 },
-    { code: 'TN', name: 'Tunis', continent: 3 },
-    { code: 'TR', name: 'Turkey', continent: 1 },
+    { code: 'TN', name: 'Tunis', continent: 3, FirstDayOfWeek: 1 },
+    { code: 'TR', name: 'Turkey', continent: 1, FirstDayOfWeek: 1 },
     { code: 'TT', name: 'Trinidad and Tobago', continent: 4 },
-    { code: 'TW', name: 'Taiwan', continent: 2 },
+    { code: 'TW', name: 'Taiwan', continent: 2, FirstDayOfWeek: 0 },
     { code: 'TZ', name: 'Tanzania', continent: 3 },
-    { code: 'UA', name: 'Ukraine', continent: 1 },
+    { code: 'UA', name: 'Ukraine', continent: 1, FirstDayOfWeek: 1 },
     { code: 'UG', name: 'Uganda', continent: 3 },
     { code: 'US', name: 'United States of America', continent: 4 },
-    { code: 'UY', name: 'Uruguay', continent: 4 },
-    { code: 'UZ', name: 'Uzbekistan', continent: 2 },
+    { code: 'UY', name: 'Uruguay', continent: 4, FirstDayOfWeek: 1 },
+    { code: 'UZ', name: 'Uzbekistan', continent: 2, FirstDayOfWeek: 1 },
     { code: 'VC', name: 'Saint Vincent', continent: 4 },
     { code: 'VE', name: 'Venezuela', continent: 4 },
     { code: 'VG', name: 'Virgin Islands', continent: 4 },
-    { code: 'VN', name: 'Vietnam', continent: 2 },
+    { code: 'VN', name: 'Vietnam', continent: 2, FirstDayOfWeek: 1 },
     { code: 'VU', name: 'Vanuatu', continent: 5 },
     { code: 'WS', name: 'Samoa', continent: 5 },
-    { code: 'YE', name: 'Yemen', continent: 2 },
+    { code: 'YE', name: 'Yemen', continent: 2, FirstDayOfWeek: 6 },
     { code: 'YT', name: 'Mayotte', continent: 6 },
     { code: 'ZA', name: 'South Africa', continent: 3 },
     { code: 'ZM', name: 'Zambia', continent: 3 },
@@ -3556,6 +3557,10 @@ class TTimeZone {
 		return 0;
 	}
 
+	get TimeZoneOffsetText() {
+		return TTimeZone.GetTimeZoneOffsetText(this.OffsetMinutes/60);
+	}
+
 	static GetTimeZoneOffsetText(d)
 	{
 		var a4, a5;
@@ -4302,7 +4307,11 @@ class GCLocation {
 
     get FirstDayOfWeek() {
       if (this.Country != null)
+      {
+        if (this.Country.FirstDayOfWeek != undefined) {
           return this.Country.FirstDayOfWeek;
+        }
+      }
       return gds.getValue(GCDS.GENERAL_FIRST_DOW);
     }
 
@@ -4353,11 +4362,21 @@ class GCLocation {
         return GCEarthData.GetTextLongitude(Longitude);
     }
 
+    GetLocationText() {
+      return this.Title + " (" +
+         GCEarthData.GetTextLatitude(this.Latitude) + ", " +
+         GCEarthData.GetTextLongitude(this.Longitude) + ")";
+    }
+
     GetFullName() {
       return this.Title + " (" +
          GCEarthData.GetTextLatitude(this.Latitude) + ", " +
          GCEarthData.GetTextLongitude(this.Longitude) + "), Timezone: " +
          this.TimeZoneName;
+    }
+
+    GetTimeZoneText() {
+      return sprintf("%s %s", this.TimeZoneName, this.TimeZone.TimeZoneOffsetText);
     }
 
     GetCoordinatesText() {
@@ -14489,25 +14508,8 @@ class TResultCalendar
 		var sdate = new GregorianDateTime()
 		sdate.year = nYear
 		sdate.month = nMonth
-		this.CalculateCalendar(loc, sdate, GetMonthMaxDays(nYear, nMonth))
-	}
-
-	//int DAYS_TO_ENDWEEK(int lastMonthDay)
-	DAYS_TO_ENDWEEK(lastMonthDay)
-	{
-		return (21 - (lastMonthDay - this.m_Location.FirstDayOfWeek)) % 7;
-	}
-
-	//int DAYS_FROM_BEGINWEEK(int firstMonthDay)
-	DAYS_FROM_BEGINWEEK(firstMonthDay)
-	{
-		return (firstMonthDay - this.m_Location.FirstDayOfWeek + 14) % 7;
-	}
-
-	//int DAY_INDEX(int day)
-	DAY_INDEX(day)
-	{
-		return (day + this.m_Location.FirstDayOfWeek) % 7;
+		sdate.day = 1
+		this.CalculateCalendar(loc, sdate, GregorianDateTime.GetMonthMaxDays(nYear, nMonth))
 	}
 
     // CalculateCalendar(GCLocation loc, GregorianDateTime begDate, int iCount)
@@ -15782,7 +15784,7 @@ function getDayBkgColorCode(/*VAISNAVADAY */ p)
 {
 	if (p == null)
 		return "";
-	if (p.nFastID == FAST_EKADASI)
+	if (p.nFastID == FastType.FAST_EKADASI)
 		return "#FFFFBB";
 	if (p.nFastID != 0)
 		return "#BBFFBB";
@@ -15824,7 +15826,7 @@ function writeCalendarHtml(daybuff)
 		pvd = daybuff.GetDay(k);
 		if (pvd)
 		{
-			if (nPrevMasa != pvd.astrodata.nMasa)
+			if (nPrevMasa != pvd.astrodata.Masa)
 			{
 				pp = document.createElement('p');
 				pp.style.textAlign = 'center';
@@ -15900,6 +15902,7 @@ function writeCalendarHtml(daybuff)
 				curCell = document.createElement('td');
 				curCell.className = 'hed';
 				curCell.innerText = 'TITHI';
+				curCell.style.minWidth = '20em';
 				curRow.appendChild(curCell);
 
 				curCell = document.createElement('td');
@@ -15924,7 +15927,7 @@ function writeCalendarHtml(daybuff)
 				curRow.appendChild(curCell);
 			}
 
-			nPrevMasa = pvd.astrodata.nMasa;
+			nPrevMasa = pvd.astrodata.Masa;
 
 			curRow = document.createElement('tr');
 			curTable.appendChild(curRow);
@@ -16032,6 +16035,313 @@ function writeCalendarHtml(daybuff)
 	pp.innerText = sprintf('Generated by %s', GCStrings.getString(130));
 	main.appendChild(pp);
 
+
+	pp = document.createElement('p');
+	main.appendChild(pp);
+	pp.style.textAlign = 'center';
+	pp.style.marginTop = '16pt';
+	pp.innerHTML = sprintf('<a href="?st=1">Table Calendar</a>')
+
 	return main;
 }
- 
+
+function monthString(m, y, o) {
+	while (o > 0) {
+		m += 1;
+		o -= 1;
+		if (m > 12) {
+			m = 1;
+			y += 1;
+		}
+	}
+	while (o < 0) {
+		m -= 1;
+		o += 1;
+		if (m < 1) {
+			m = 12;
+			y -= 1;
+		}
+	}
+	return sprintf("%s %d", GCStrings.getString(m + 759), y)
+}
+
+function linkMonthString(m, y, o) {
+	while (o > 0) {
+		m += 1;
+		o -= 1;
+		if (m > 12) {
+			m = 1;
+			y += 1;
+		}
+	}
+	while (o < 0) {
+		m -= 1;
+		o += 1;
+		if (m < 1) {
+			m = 12;
+			y -= 1;
+		}
+	}
+	return sprintf("%04d-%02d-01", y, m);
+}
+
+function writeTableHtml(daybuff)
+{
+	let g_firstday_in_week = daybuff.m_Location.FirstDayOfWeek;
+	var str, st;
+	var nroot, ntable, nrow, ncell;
+	var n1, n2, n3, n4;
+	var pvd;
+	var nPrevMonth = -1;
+	var prevMas = -1;
+	var brw = 0;
+	var isFirstRow = true;
+	var isFirstCol = true;
+	var colNum = 0;
+
+	// first = 1
+	//int i_end[7] = {0, 6, 5, 4, 3, 2, 1}; //(6-(i-first))%7
+	//int i_beg[7] = {6, 0, 1, 2, 3, 4, 5}; //(i-first)%7
+
+	nroot = document.createElement('div');
+
+	var masa_str = '';
+	for (var k=0; k < daybuff.m_vcCount; k++) {
+		pvd = daybuff.GetDay(k);
+		if (prevMas<0) {
+			prevMas = pvd.astrodata.Masa;
+			masa_str += sprintf("%s Masa ", GCMasa.GetName(prevMas));
+		}
+		if (pvd.astrodata.Masa != prevMas) {
+			masa_str += sprintf(" till %s", pvd.Previous.date.toString());
+			masa_str += sprintf(", %s Masa ", GCMasa.GetName(pvd.astrodata.Masa));
+			masa_str += sprintf(" from %s", pvd.date.toString());
+			prevMas = pvd.astrodata.Masa;
+		}
+	}
+
+	for (var k = 0; k < daybuff.m_vcCount; k++)
+	{
+		pvd = daybuff.GetDay(k);
+		if (pvd)
+		{
+			var bSemicolon = false;
+			var bBr = false;
+			var lwd = pvd.date.dayOfWeek;
+			if (nPrevMonth != pvd.date.month)
+			{
+				if (nPrevMonth != -1)
+				{
+					for(var y = colNum; y < 7; y++)
+					{
+						ncell = document.createElement('td');
+						ncell.style.border = 'solid windowtext 1pt';
+						ncell.style.padding = '3pt 3pt 3pt 3pt';
+						ncell.innerHTML = '&nbsp;'
+						nrow.appendChild(ncell);
+						colNum += 1;
+					}
+					n1 = document.createElement('p');
+					n1.innerHTML = '&nbsp;';
+					nroot.appendChild(n1);
+				}
+				ntable = document.createElement('table');
+				nroot.appendChild(ntable);
+				ntable.width = '100%';
+				ntable.border=0;
+				ntable.frame='bottom';
+				ntable.cellSpacing = 0;
+				ntable.cellPadding = 0;
+
+				nrow = document.createElement('tr');
+				ntable.appendChild(nrow);
+
+				ncell = document.createElement('td');
+				ncell.width = '60%';
+				nrow.appendChild(ncell);
+				n1 = document.createElement('p');
+				n1.className = 'month'
+				ncell.appendChild(n1);
+				n1.innerHTML = sprintf("%s %d<br><span class='tnote'>%s</span>", 
+							GCStrings.getString(pvd.date.month + 759), 
+							pvd.date.year,
+							masa_str);
+
+				ncell = document.createElement('td');
+				nrow.appendChild(ncell);
+				n1 = document.createElement('p');
+				ncell.appendChild(n1);
+				n1.classList.add('tnote');
+				n1.style.textAlign = 'right';
+				n1.innerHTML = sprintf("%s<br>Timezone: %s",
+					daybuff.m_Location.GetLocationText(),
+					daybuff.m_Location.GetTimeZoneText());
+
+				nroot.appendChild(document.createElement('hr'));
+				nPrevMonth = pvd.date.month;
+
+				ntable = document.createElement('table');
+				nroot.appendChild(ntable);
+				ntable.width = '100%';
+				ntable.cellPadding = 0;
+				ntable.cellSpacing = 0;
+
+				nrow = document.createElement('tr');
+				ntable.appendChild(nrow);
+				for(var y = 0; y < 7; y++)
+				{
+					ncell = document.createElement('td');
+					ncell.width = '14%';
+					ncell.align = 'center';
+					ncell.style.fontSize = '10pt';
+					ncell.style.border = 'none';
+					ncell.innerText = GCStrings.getString((y + g_firstday_in_week) % 7);
+					nrow.appendChild(ncell);
+				}
+				nrow = document.createElement('tr');
+				ntable.appendChild(nrow);
+				colNum = 0;
+				for(var y = g_firstday_in_week; y < pvd.date.dayOfWeek; y++) {
+					ncell = document.createElement('td');
+					ncell.style.borderBottom = '1pt solid black';
+					ncell.style.borderRight = '1pt solid black';
+					if (isFirstCol) {
+						ncell.style.borderLeft = '1pt solid black';
+					}
+					ncell.style.borderTop = '1pt solid black';
+					ncell.style.padding = '3pt 3pt 3pt 3pt';
+					ncell.innerHTML = '&nbsp;'
+					nrow.appendChild(ncell);
+					colNum += 1;
+					isFirstCol = false;
+				}
+			}
+			else
+			{
+				if (pvd.date.dayOfWeek == g_firstday_in_week) {
+					nrow = document.createElement('tr');
+					ntable.appendChild(nrow);
+					isFirstRow = false;
+					isFirstCol = true;
+					colNum = 0;
+				}
+			}
+
+			// date data
+			ncell = document.createElement('td');
+			ncell.vAlign = 'top';
+			ncell.style.borderBottom = '1pt solid black';
+			ncell.style.borderRight = '1pt solid black';
+			if (isFirstCol) {
+				ncell.style.borderLeft = '1pt solid black';
+			}
+			if (isFirstRow) {
+				ncell.style.borderTop = '1pt solid black';
+			}
+			ncell.style.padding = '3pt';
+			ncell.style.overflow = 'hidden';
+			ncell.bgColor = getDayBkgColorCode(pvd);
+			ncell.height = '120px';
+			nrow.appendChild(ncell);
+			colNum += 1;
+			isFirstCol = false;
+
+			n1 = document.createElement('table');
+			ncell.appendChild(n1);
+			n1.width = '100%';
+			n1.border = 0;
+			n2 = document.createElement('tr');
+			n1.appendChild(n2);
+			n3 = document.createElement('td');
+			n2.appendChild(n3);
+			n4 = document.createElement('p');
+			n4.classList.add('text');
+			n4.classList.add('dayt');
+			n3.appendChild(n4);
+			n4.innerText = pvd.date.day.toString();
+			n3 = document.createElement('td');
+			n3.classList.add('tithiname');
+			n2.appendChild(n3);
+			n3.innerText = pvd.GetFullTithiName();
+
+			brw = 0;
+
+			n1 = document.createElement('span');
+			ncell.appendChild(n1);
+			n1.classList.add('text');
+
+			str = '';
+
+			if (pvd.dayEvents.length > 0)
+			{
+				brw = 1;
+				bSemicolon = false;
+			}
+
+			for(var ed of pvd.dayEvents)
+			{
+				var disp = ed.disp;
+				if (disp == undefined || disp == -1 || gds.getValue(disp))
+				{
+					if (bSemicolon)
+						str += "; ";
+					bSemicolon=true;
+					if (ed.spec != 1)
+					{
+						str += ed.text;
+					}
+					else
+					{
+						str += sprintf('<i>%s</i>', ed.text);
+					}
+				}
+			}
+
+
+			if (prevMas != pvd.astrodata.Masa)
+			{
+				if (brw)
+					str += "<br>";
+				brw = 1;
+				str += sprintf('<b>[%s Masa]</b>', GCMasa.GetName(pvd.astrodata.Masa));
+				prevMas = pvd.astrodata.Masa;
+			}
+			n1.innerHTML = str;
+		}
+	}
+
+	for(var y = colNum; y < 7; y++)
+	{
+		ncell = document.createElement('td');
+		nrow.appendChild(ncell);
+		ncell.style.borderBottom = '1pt solid black';
+		ncell.style.borderRight = '1pt solid black';
+		ncell.style.padding = '3pt';
+		ncell.innerHTML = '&nbsp;'
+	}
+
+	var m0 = [monthString(pvd.date.month, pvd.date.year, -2),
+		monthString(pvd.date.month, pvd.date.year, -1),
+		monthString(pvd.date.month, pvd.date.year, 0),
+		monthString(pvd.date.month, pvd.date.year, 1),
+		monthString(pvd.date.month, pvd.date.year, 2)];
+	var m1 = [linkMonthString(pvd.date.month, pvd.date.year, -2),
+		linkMonthString(pvd.date.month, pvd.date.year, -1),
+		linkMonthString(pvd.date.month, pvd.date.year, 0),
+		linkMonthString(pvd.date.month, pvd.date.year, 1),
+		linkMonthString(pvd.date.month, pvd.date.year, 2)];
+		
+	n1 = document.createElement('p');
+	nroot.appendChild(n1);
+	n1.style.textAlign = 'center';
+	n1.innerHTML = sprintf('<a href="?date=%s">&lt;&lt; %s</a> | <a href="?date=%s">&lt; %s</a> | %s | <a href="?date=%s">%s &gt;</a> | <a href="?date=%s">%s &gt;&gt;</a>',
+		m1[0], m0[0], m1[1], m0[1], m0[2], m1[3], m0[3], m1[4], m0[4]);
+
+	n1 = document.createElement('p');
+	nroot.appendChild(n1);
+	n1.style.textAlign = 'center';
+	n1.style.marginTop = '16pt';
+	n1.innerHTML = sprintf('<a href="?st=0">List Calendar</a>')
+
+	return nroot;
+} 
