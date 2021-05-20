@@ -33,6 +33,10 @@
 		return this.sunRise.Naksatra;
 	}
 
+	get naksatraName() {
+		return GCNaksatra.GetName(this.sunRise.Naksatra);
+	}
+
 	get masa() {
 		return this.Masa;
 	}

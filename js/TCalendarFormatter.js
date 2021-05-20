@@ -482,7 +482,10 @@ function writeTableHtml(daybuff)
 			n3 = document.createElement('td');
 			n3.classList.add('tithiname');
 			n2.appendChild(n3);
-			n3.innerText = pvd.GetFullTithiName();
+			n3.innerHTML = '<p class="tithiname"><span>' + pvd.GetFullTithiName()
+				+ '</span><br><span style="color:sienna;font-size:80%;">' 
+				+ pvd.astrodata.naksatraName
+				+ ' Naksatra</span></p>';
 
 			brw = 0;
 

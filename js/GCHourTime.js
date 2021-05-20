@@ -277,6 +277,8 @@ class GCHourTime
 		time_hr -= this.sec;
 		time_hr *= 1000;
 		this.mili = Convert.ToInt32(Math.floor(time_hr));
+
+		return this;
 	}
 
 	////////////////////////////////////////////////////////////////

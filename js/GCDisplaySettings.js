@@ -46,6 +46,7 @@
 	"CAL_COL_SUNRISE": 68,
 	"CAL_COL_NOON   ": 69,
 	"CAL_COL_SUNSET ": 70,
+	"CAL_ECLIPSE": 71
 }
 
 let DisplayPriorities = {
@@ -429,6 +430,11 @@ let defaultDisplaySettings = {
 		val: 0,
 		oldval: 0,
 		text: "Calendar Column - Sunset"
+	},
+	71: {
+		val: 1,
+		oldval: 0,
+		text: "Show Eclipses"
 	}
 }
 

@@ -272,6 +272,60 @@ class TResultCalendar
 		if (this.EkadasiOnly)
 			return 1;
 
+
+		if (gds.getBoolValue(71)) {
+			for (var t of this.m_pData) {
+				if (t.date.year in sun_eclipses && t.date.month in sun_eclipses[t.date.year]
+					&& t.date.day in sun_eclipses[t.date.year][t.date.month]) {
+						var rec = sun_eclipses[t.date.year][t.date.month][t.date.day];
+						//console.log('Date in sun eclipses:', rec)
+						var A = this.GetTimeInDay(t, rec.dayhour);
+						var curr = A[0];
+						var dayt1 = A[1];
+						if (curr != null) {
+							var text = sprintf("%s Solar Eclipse around %s. Visibility: %s", rec.type, dayt1.ToShortTimeString() ,rec.visibility);
+							curr.AddEvent(DisplayPriorities.PRIO_SUN, GCDS.CAL_ECLIPSE, text)
+							//console.log('Timezone offset x:', text)	
+						}
+				} else if (t.date.year in moon_eclipses && t.date.month in moon_eclipses[t.date.year]
+					&& t.date.day in moon_eclipses[t.date.year][t.date.month]) {
+						var rec = moon_eclipses[t.date.year][t.date.month][t.date.day];
+						console.log('Date in moon eclipses:', rec)
+						var t1 = null, t2 = null;
+						var mult = 1 / 1440.0;
+						if (rec['part-time'] !=null) {
+							t1 = rec.dayhour - rec['part-time']/2880;
+							t2 = rec.dayhour + rec['part-time']/2880;
+						}
+						if (rec['total-time'] !=null) {
+							t1 = rec.dayhour - rec['total-time']/2880;
+							t2 = rec.dayhour + rec['total-time']/2880;
+						}
+						var A = this.GetTimeInDay(t, t1);
+						var B = this.GetTimeInDay(t, t2);
+						var curr = null;
+						if (A[0] != null && B[0] != null) {
+							var text;
+							if (A[0].date.day == t.date.day && B[0].date.day == t.date.day) {
+								text = sprintf("%s Moon Eclipse between %s - %s. Visibility: %s", rec.type, A[1].ToShortTimeString(), B[1].ToShortTimeString() ,rec.visibility);
+								A[0].AddEvent(DisplayPriorities.PRIO_SUN, GCDS.CAL_ECLIPSE, text)
+							} else {
+								if (A[0].date.day != t.date.day && B[0].date.day == t.date.day) {
+									text = sprintf("%s Moon Eclipse before %s. Visibility: %s", rec.type, B[1].ToShortTimeString(), rec.visibility);
+									B[0].AddEvent(DisplayPriorities.PRIO_SUN, GCDS.CAL_ECLIPSE, text)
+								}
+								if (A[0].date.day == t.date.day && B[0].date.day != t.date.day) {
+									text = sprintf("%s Moon Eclipse after %s. Visibility: %s", rec.type, A[1].ToShortTimeString(), rec.visibility);
+									A[0].AddEvent(DisplayPriorities.PRIO_SUN, GCDS.CAL_ECLIPSE, text)
+								}
+							}
+							console.log('Timezone offset x:', A[0])	
+						}
+					}
+
+			}
+		}
+
 		// init ksaya data
 		// init of second day of vriddhi
 		this.CalculateKsayaVriddhiTithis(earth);
@@ -353,6 +407,27 @@ class TResultCalendar
 
 	}
 
+	GetTimeInDay(curr, dayhours)
+	{
+		var doff = (this.m_Location.OffsetUtcHours*60 + curr.BiasMinutes);
+		doff = dayhours + doff * 60 / 86400;
+		console.log('doff:', doff);
+		if (doff < 0.0 && curr.Previous != null) {
+			doff += 1.0;
+			curr = curr.Previous;
+		} else if (doff >= 0.0 && doff < 1.0) {
+		} else if (doff >= 1.0 && curr.Next != null) {
+			doff -= 1.0;
+			curr = curr.Next;
+		} else {
+			return [null, null];
+		}
+
+		var dt = new GCHourTime();
+		dt.SetDayTime(doff);
+
+		return [curr, dt];
+	}
 
 	ApplyDaylightSavingHours()
 	{
