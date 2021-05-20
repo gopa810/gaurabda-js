@@ -515,13 +515,13 @@ class GCDisplaySettings {
 	}
 	setValue(i, val)
 	{
-		this.GCDisplaySettings_gss[i].old_val = GCDisplaySettings_gss[i].val;
+		this.GCDisplaySettings_gss[i].old_val = this.GCDisplaySettings_gss[i].val;
 		this.GCDisplaySettings_gss[i].val = val;
 	}
 
 	setBoolValue(i, val)
 	{
-		this.GCDisplaySettings_gss[i].old_val = GCDisplaySettings_gss[i].val;
+		this.GCDisplaySettings_gss[i].old_val = this.GCDisplaySettings_gss[i].val;
 		this.GCDisplaySettings_gss[i].val = val ? 1 : 0;
 	}
 
