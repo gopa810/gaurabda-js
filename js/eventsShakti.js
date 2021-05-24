@@ -588,7 +588,7 @@ var gShaktiEvents = [
 		{
 			"type": "T",
 			"name": "Gayatri Jayanti",
-			"tithi": 26,
+			"tithi": 25,
 			"masa": 1,
  			"fastSubj": "",
 			"fast": 0,
